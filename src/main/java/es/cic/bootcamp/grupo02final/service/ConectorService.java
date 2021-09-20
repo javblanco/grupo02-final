@@ -1,5 +1,7 @@
 package es.cic.bootcamp.grupo02final.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,15 @@ public class ConectorService {
 		}else {
 			throw new RegistroNoExisteException("El registro con el id introducido no existe");
 		}
+	}
+	
+	public List<Conector> findAll(){
+		
+		List<Conector> conectores = new ArrayList<>();
+		conectorRepository.findAll()
+			.forEach(conectores::add);
+			
+		return conectores;
 	}
 	
 	public Conector update(Conector conector) {
