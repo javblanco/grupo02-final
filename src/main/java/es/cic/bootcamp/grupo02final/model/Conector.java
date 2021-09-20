@@ -20,7 +20,7 @@ public class Conector {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Length(max = 10)
+	@Length(max = 15)
 	@NotBlank
 	private String nombre;
 	
