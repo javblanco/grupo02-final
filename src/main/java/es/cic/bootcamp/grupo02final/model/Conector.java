@@ -29,12 +29,6 @@ public class Conector {
 	
 	@NotBlank
 	private String tipoServicio;
-	
-	@ManyToOne
-	private Instancia instancia;
-	
-	@ManyToOne
-	private Flujo flujo;
 
 	public Long getId() {
 		return id;
@@ -50,14 +44,6 @@ public class Conector {
 
 	public String getTipoServicio() {
 		return tipoServicio;
-	}
-
-	public Instancia getInstancia() {
-		return instancia;
-	}
-
-	public Flujo getFlujo() {
-		return flujo;
 	}
 
 	public void setId(Long id) {
@@ -76,18 +62,10 @@ public class Conector {
 		this.tipoServicio = tipoServicio;
 	}
 
-	public void setInstancia(Instancia instancia) {
-		this.instancia = instancia;
-	}
-
-	public void setFlujo(Flujo flujo) {
-		this.flujo = flujo;
-	}
-
 	@Override
 	public String toString() {
 		return "Conector [id=" + id + ", nombre=" + nombre + ", lenguaje=" + lenguaje + ", tipoServicio=" + tipoServicio
-				+ ", instancia=" + instancia + ", flujo=" + flujo + "]";
+				+ ", instancia=" + "]";
 	}
 
 	@Override

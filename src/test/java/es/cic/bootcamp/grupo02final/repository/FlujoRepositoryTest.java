@@ -113,12 +113,7 @@ class FlujoRepositoryTest {
 		
 		Instancia instancia = generarInstancia();
 		flujo.setInstancia(instancia);
-		
-		List<Conector> conectores = new ArrayList<>();
-		Conector conector = generarConector();
-		conectores.add(conector);
-		flujo.setConectores(conectores);
-		
+	
 		return flujo;
 		
 	}
@@ -135,18 +130,6 @@ class FlujoRepositoryTest {
 		
 	}
 	
-	private Conector generarConector() {
-		
-		Conector conector = new Conector();
-		conector.setLenguaje("Java");
-		conector.setNombre("Conector 1");
-		conector.setTipoServicio("Servicio 1");
-		
-		entityManager.persist(conector);
-		entityManager.flush();
-		
-		return conector;
-	}
 
 
 }

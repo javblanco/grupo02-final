@@ -27,11 +27,8 @@ public class Instancia {
 	@NotBlank
 	private String nombre;
 	
-	@OneToOne
-	private Flujo flujo;
-	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "id")
-	private List<Conector> conectores;
+	private List<Flujo> flujos;
 
 	public Long getId() {
 		return id;
@@ -41,12 +38,8 @@ public class Instancia {
 		return nombre;
 	}
 
-	public Flujo getFlujo() {
-		return flujo;
-	}
-
-	public List<Conector> getConectores() {
-		return conectores;
+	public List<Flujo> getFlujo() {
+		return flujos;
 	}
 
 	public void setId(Long id) {
@@ -57,17 +50,13 @@ public class Instancia {
 		this.nombre = nombre;
 	}
 
-	public void setFlujo(Flujo flujo) {
-		this.flujo = flujo;
-	}
-
-	public void setConectores(List<Conector> conectores) {
-		this.conectores = conectores;
+	public void setFlujos(List<Flujo> flujos) {
+		this.flujos = flujos;
 	}
 
 	@Override
 	public String toString() {
-		return "Instancia [id=" + id + ", nombre=" + nombre + ", flujo=" + flujo + ", conectores=" + conectores + "]";
+		return "Instancia [id=" + id + ", nombre=" + nombre + ", flujos=" + flujos + "]";
 	}
 
 	@Override
