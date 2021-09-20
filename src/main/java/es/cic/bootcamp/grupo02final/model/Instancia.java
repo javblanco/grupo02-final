@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,14 +23,14 @@ public class Instancia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Length(max = 10)
+	@Length(max = 15)
 	@NotBlank
 	private String nombre;
 	
-	@OneToOne(mappedBy = "id")
+	@OneToOne
 	private Flujo flujo;
 	
-	@OneToMany(mappedBy = "id")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "id")
 	private List<Conector> conectores;
 
 	public Long getId() {
