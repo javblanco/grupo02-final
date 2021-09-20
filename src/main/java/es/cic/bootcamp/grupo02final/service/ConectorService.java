@@ -19,8 +19,7 @@ public class ConectorService {
 	
 	public Long save(Conector conector) {
 		
-		Optional<Conector> optional = conectorRepository.findById(conector.getId());
-		if(optional.isPresent()) {
+		if(conector.getId() != null) {
 			throw new RegistroYaCreadoException("El registro introducido ya existe");
 		}
 		
@@ -52,14 +51,19 @@ public class ConectorService {
 	
 	public Conector update(Conector conector) {
 		
-		if(conector.getId() <= 0) {
-			throw new IdNoValidoException("El id introducido no es válido");
+		if(conector.getId() == null) {
+			throw new RegistroNoExisteException("El registro introducido no existe");
 		}
 		
 		Optional<Conector> optional = conectorRepository.findById(conector.getId());
 		if(optional.isEmpty()) {
 			throw new RegistroNoExisteException("El registro introducido no existe");
 		}
+		
+		if(conector.getId() <= 0) {
+			throw new IdNoValidoException("El id introducido no es válido");
+		}
+		
 		
 		return conectorRepository.save(conector);
 		

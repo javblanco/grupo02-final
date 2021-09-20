@@ -2,6 +2,8 @@ package es.cic.bootcamp.grupo02final.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,7 @@ public class ConectorController {
 	private ConectorService conectorService;
 	
 	@PostMapping
-	public Long save(@RequestBody Conector conector) {
+	public Long save(@Valid @RequestBody Conector conector) {
 		
 		return conectorService.save(conector);
 		
@@ -47,7 +49,7 @@ public class ConectorController {
 	
 	@PutMapping
 	@ResponseBody
-	public Conector update(@RequestBody Conector conector) {
+	public Conector update(@Valid @RequestBody Conector conector) {
 		
 		return conectorService.update(conector);
 		
