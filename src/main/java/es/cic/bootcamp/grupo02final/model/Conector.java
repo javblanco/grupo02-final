@@ -29,6 +29,18 @@ public class Conector {
 	@NotBlank
 	private String tipoServicio;
 
+	public Conector() {
+		super();
+	}
+
+	public Conector(@Length(max = 15) @NotBlank String nombre, @NotBlank String lenguaje,
+			@NotBlank String tipoServicio) {
+		super();
+		this.nombre = nombre;
+		this.lenguaje = lenguaje;
+		this.tipoServicio = tipoServicio;
+	}
+
 	public Long getId() {
 		return id;
 	}
