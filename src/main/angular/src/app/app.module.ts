@@ -10,7 +10,7 @@ import { ConexionAddComponent } from './conexion-add/conexion-add.component';
 import { InstanciaComponent } from './instancia/instancia.component';
 import { InstanciaAddComponent } from './instancia-add/instancia-add.component';
 import { FlujoComponent } from './flujo/flujo.component';
-import { Flujo } from './flujo.add/flujo.add.component';
+import { FlujoAddComponent } from './flujo-add/flujo-add.component';
 import { FooterComponent } from './footer/footer.component';
 
 
@@ -24,7 +24,7 @@ import { FooterComponent } from './footer/footer.component';
     InstanciaComponent,
     InstanciaAddComponent,
     FlujoComponent,
-    Flujo.AddComponent,
+    FlujoAddComponent,
     FooterComponent,
  
     

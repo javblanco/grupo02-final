@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Flujo.AddComponent } from './flujo.add.component';
+import { FlujoAddComponent } from './flujo-add.component';
 
-describe('Flujo.AddComponent', () => {
-  let component: Flujo.AddComponent;
-  let fixture: ComponentFixture<Flujo.AddComponent>;
+describe('FlujoAddComponent', () => {
+  let component: FlujoAddComponent;
+  let fixture: ComponentFixture<FlujoAddComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Flujo.AddComponent ]
+      declarations: [ FlujoAddComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Flujo.AddComponent);
+    fixture = TestBed.createComponent(FlujoAddComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
