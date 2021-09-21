@@ -49,7 +49,7 @@ class ConectorControllerIntegrationTest {
 
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
-	void testSave() throws Exception {
+	void testCreate() throws Exception {
 		Conector conector = generarConector();
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
@@ -80,7 +80,7 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
-	void testTamañoNombreNoPermitido_save() throws Exception {
+	void testTamañoNombreNoPermitido_create() throws Exception {
 		Conector conector = generarConector();
 		conector.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
@@ -99,7 +99,7 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
-	void testNombreVacio_save() throws Exception {
+	void testNombreVacio_create() throws Exception {
 		Conector conector = generarConector();
 		conector.setNombre("");
 
@@ -118,7 +118,7 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
-	void testLenguajeVacio_save() throws Exception {
+	void testLenguajeVacio_create() throws Exception {
 		Conector conector = generarConector();
 		conector.setLenguaje("");
 
@@ -137,7 +137,7 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
-	void testTipoServicioVacio_save() throws Exception {
+	void testTipoServicioVacio_create() throws Exception {
 		Conector conector = generarConector();
 		conector.setTipoServicio("");
 
@@ -156,7 +156,7 @@ class ConectorControllerIntegrationTest {
 
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
-	void testRegsitroNoExisteException_save() throws Exception {
+	void testRegsitroNoExisteException_create() throws Exception {
 
 		Conector conector = generarConector();
 		conector.setId(1L);
