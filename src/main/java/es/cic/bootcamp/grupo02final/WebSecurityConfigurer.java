@@ -17,27 +17,29 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         auth.inMemoryAuthentication()
-         .passwordEncoder(encoder)
-         .withUser("usuario")
-         .password(encoder.encode("secret2"))
-         .roles(ADMIN, USUARIO);
+            .passwordEncoder(encoder)
+            .withUser("usuario")
+            .password(encoder.encode("secret2"))
+            .roles(ADMIN, USUARIO);
         auth.inMemoryAuthentication()
-         .passwordEncoder(encoder)
-         .withUser("administrador")
-         .password(encoder.encode("secret"))
-         .roles("USUARIO");
+            .passwordEncoder(encoder)
+            .withUser("administrador")
+            .password(encoder.encode("secret"))
+            .roles(USUARIO);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-          .antMatchers("/conector/**")
-          .hasRole(ADMIN)
-          .antMatchers("/instancia/**")
-          .hasRole(USUARIO)
-          .antMatchers("/flujo/**")
-          .hasRole(ADMIN)
-          .and()
-          .httpBasic();
+            .antMatchers("/**")
+            .hasRole(USUARIO)
+            // // .antMatchers("/conexiones/**")
+            // // .hasRole(ADMIN)
+            // .antMatchers("/instancia/**")
+            // .hasRole(USUARIO)
+            // .antMatchers("/flujo/**")
+            // .hasRole(ADMIN)
+            .and()
+            .httpBasic();
     }
 }
