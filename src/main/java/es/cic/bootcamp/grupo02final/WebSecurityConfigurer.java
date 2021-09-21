@@ -19,12 +19,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         auth.inMemoryAuthentication()
          .passwordEncoder(encoder)
-         .withUser("sergio")
+         .withUser("usuario")
          .password(encoder.encode("secret2"))
          .roles(ADMIN, USUARIO);
         auth.inMemoryAuthentication()
          .passwordEncoder(encoder)
-         .withUser("spring")
+         .withUser("administrador")
          .password(encoder.encode("secret"))
          .roles("USUARIO");
     }
