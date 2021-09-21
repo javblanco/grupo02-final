@@ -52,7 +52,7 @@ class InstanciaControllerIntegrationTest {
 
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
-	void testSave() throws Exception {
+	void testCreate() throws Exception {
 		mapper.configure(MapperFeature.USE_GETTERS_AS_SETTERS, false);
 		Instancia instancia = generarInstancia();
 
@@ -84,7 +84,7 @@ class InstanciaControllerIntegrationTest {
 	
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
-	void testTamañoNombreNoPermitido_save() throws Exception {
+	void testTamañoNombreNoPermitido_create() throws Exception {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
@@ -103,7 +103,7 @@ class InstanciaControllerIntegrationTest {
 	
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
-	void testNombreVacio_save() throws Exception {
+	void testNombreVacio_create() throws Exception {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("");
 
@@ -124,7 +124,7 @@ class InstanciaControllerIntegrationTest {
 
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
-	void testRegsitroNoExisteException_save() throws Exception {
+	void testRegsitroNoExisteException_create() throws Exception {
 
 		Instancia instancia = generarInstancia();
 		instancia.setId(1L);

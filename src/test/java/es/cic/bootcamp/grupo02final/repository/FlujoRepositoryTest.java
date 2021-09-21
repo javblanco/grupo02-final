@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import es.cic.bootcamp.grupo02final.model.Conector;
 import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.model.Instancia;
 
@@ -23,7 +22,7 @@ class FlujoRepositoryTest {
 	private TestEntityManager entityManager;
 
 	@Test
-	void testSave() {
+	void testCreate() {
 		Flujo flujo = generarFlujo();
 		
 		Flujo flujoCreado = cut.save(flujo);

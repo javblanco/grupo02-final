@@ -17,7 +17,7 @@ public class ConectorService {
 	@Autowired
 	private ConectorRepository conectorRepository;
 	
-	public Long save(Conector conector) {
+	public Long create(Conector conector) {
 		
 		if(conector.getId() != null) {
 			throw new RegistroYaCreadoException("El registro introducido ya existe");
