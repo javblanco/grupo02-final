@@ -2,6 +2,8 @@ package es.cic.bootcamp.grupo02final.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +26,8 @@ public class FlujoController {
 
     @PostMapping
     @ResponseBody
-    public Long create(@RequestBody Flujo dto){
-        return flujoService.create(dto);
+    public Long create(@Valid @RequestBody Flujo flujo){
+        return flujoService.create(flujo);
     }
 
     @GetMapping("/{id}")
@@ -42,7 +44,7 @@ public class FlujoController {
 
     @PutMapping
     @ResponseBody
-    public Flujo update(@RequestBody Flujo dto){
-        return flujoService.update(dto);
+    public Flujo update(@Valid @RequestBody Flujo flujo){
+        return flujoService.update(flujo);
     }
 }
