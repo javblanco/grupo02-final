@@ -29,9 +29,9 @@ public class ConectorController {
 	}
 	
 	@PostMapping
-	public Long save(@Valid @RequestBody Conector conector) {
+	public Long create(@Valid @RequestBody Conector conector) {
 		
-		return conectorService.save(conector);
+		return conectorService.create(conector);
 		
 	}
 	

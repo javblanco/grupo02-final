@@ -27,7 +27,7 @@ class InstanciaControllerTest {
 	}
 
 	@Test
-	void testSave() {
+	void testCreate() {
 		Instancia instancia = new Instancia();
 		when(dependencia.create(instancia)).thenReturn(1L);
 		

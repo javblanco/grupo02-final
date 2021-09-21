@@ -32,12 +32,12 @@ class ConectorControllerTest {
 	@Test
 	void testCreate() {
 		Conector conector = new Conector();
-		when(dependencia.save(conector)).thenReturn(1L);
+		when(dependencia.create(conector)).thenReturn(1L);
 		
-		Long id = cut.save(conector);
+		Long id = cut.create(conector);
 		
 		assertEquals(id, 1L);
-		verify(dependencia, times(1)).save(conector);
+		verify(dependencia, times(1)).create(conector);
 		
 	}
 	

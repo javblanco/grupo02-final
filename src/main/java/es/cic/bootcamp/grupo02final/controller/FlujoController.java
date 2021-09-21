@@ -22,10 +22,13 @@ import es.cic.bootcamp.grupo02final.service.FlujoService;
 public class FlujoController {
     
     @Autowired
-    FlujoService flujoService;
+    private FlujoService flujoService;
+    
+	public void setFlujoService(FlujoService flujoService) {
+		this.flujoService = flujoService;
+	}
 
     @PostMapping
-    @ResponseBody
     public Long create(@Valid @RequestBody Flujo flujo){
         return flujoService.create(flujo);
     }
