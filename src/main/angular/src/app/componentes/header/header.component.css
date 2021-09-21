@@ -4,9 +4,8 @@ nav{
 }
 
 nav ul{
-float: right;
-list-style-type: none;
-
+    float: right;
+    list-style-type: none;
 }
 
 ul li{
