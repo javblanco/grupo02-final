@@ -7,24 +7,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.cic.bootcamp.grupo02final.DTO.FlujoDTO;
 import es.cic.bootcamp.grupo02final.exception.IdNoValidoException;
 import es.cic.bootcamp.grupo02final.exception.RegistroNoExisteException;
-import es.cic.bootcamp.grupo02final.helper.FlujoHelper;
 import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.repository.FlujoRepository;
 
 @Service
 public class FlujoService {
-    
-    @Autowired
-    FlujoHelper flujoHelper;
 
     @Autowired
     FlujoRepository repository;
 
-    public long create(FlujoDTO dto){
-        Flujo flujo = flujoHelper.dtoToEntity(dto);
+    public long create(Flujo flujo){;
         return repository.save(flujo).getId();
     }
 
@@ -42,15 +36,14 @@ public class FlujoService {
     }
 
     public List<Flujo> findAll(){
-        List<Flujo> flujos = new ArrayList();
+        List<Flujo> flujos = new ArrayList<>();
 		repository.findAll()
 			.forEach(flujos::add);
 			
 		return flujos;
     }
 
-    public FlujoDTO update(FlujoDTO dto){
-        Flujo flujo = flujoHelper.dtoToEntity(dto);
+    public Flujo update(Flujo flujo){
         if(flujo.getId() <= 0) {
 			throw new IdNoValidoException("El id introducido no es válido");
 		}
@@ -62,6 +55,6 @@ public class FlujoService {
 		
         flujo =repository.save(flujo);
 
-		return flujoHelper.entityToDto(flujo);
+		return flujo;
     }
 }

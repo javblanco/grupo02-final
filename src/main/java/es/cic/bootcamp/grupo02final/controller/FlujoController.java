@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.cic.bootcamp.grupo02final.DTO.FlujoDTO;
 import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.service.FlujoService;
 
@@ -25,7 +24,7 @@ public class FlujoController {
 
     @PostMapping
     @ResponseBody
-    public Long create(@RequestBody FlujoDTO dto){
+    public Long create(@RequestBody Flujo dto){
         return flujoService.create(dto);
     }
 
@@ -43,7 +42,7 @@ public class FlujoController {
 
     @PutMapping
     @ResponseBody
-    public FlujoDTO update(@RequestBody FlujoDTO dto){
+    public Flujo update(@RequestBody Flujo dto){
         return flujoService.update(dto);
     }
 }
