@@ -60,7 +60,7 @@ public class InstanciaService {
 			throw new RegistroNoExisteException("El registro introducido no existe");
 		}
 		
-		if(instancia.getId() <= 0) {
+		if(instancia.getId() == null || instancia.getId() <= 0) {
 			throw new IdNoValidoException("El id introducido no es válido");
 		}
 		
