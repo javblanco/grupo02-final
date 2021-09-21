@@ -1,8 +1,8 @@
 package es.cic.bootcamp.grupo02final.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,9 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
-
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -27,11 +25,8 @@ public class Instancia {
 	@NotBlank
 	private String nombre;
 	
-	@OneToOne
-	private Flujo flujo;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "id")
-	private List<Conector> conectores;
+	@OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
+	private List<Flujo> flujos = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -41,12 +36,8 @@ public class Instancia {
 		return nombre;
 	}
 
-	public Flujo getFlujo() {
-		return flujo;
-	}
-
-	public List<Conector> getConectores() {
-		return conectores;
+	public List<Flujo> getFlujo() {
+		return flujos;
 	}
 
 	public void setId(Long id) {
@@ -57,17 +48,13 @@ public class Instancia {
 		this.nombre = nombre;
 	}
 
-	public void setFlujo(Flujo flujo) {
-		this.flujo = flujo;
-	}
-
-	public void setConectores(List<Conector> conectores) {
-		this.conectores = conectores;
+	public void setFlujos(List<Flujo> flujos) {
+		this.flujos = flujos;
 	}
 
 	@Override
 	public String toString() {
-		return "Instancia [id=" + id + ", nombre=" + nombre + ", flujo=" + flujo + ", conectores=" + conectores + "]";
+		return "Instancia [id=" + id + ", nombre=" + nombre + ", flujos=" + flujos + "]";
 	}
 
 	@Override
