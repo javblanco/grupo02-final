@@ -24,10 +24,14 @@ public class InstanciaController {
 	@Autowired
 	private InstanciaService instanciaService;
 	
+	public void setInstanciaService(InstanciaService instanciaService) {
+		this.instanciaService = instanciaService;
+	}
+	
 	@PostMapping
-	public Long save(@Valid @RequestBody Instancia instancia) {
+	public Long create(@Valid @RequestBody Instancia instancia) {
 		
-		return instanciaService.save(instancia);
+		return instanciaService.create(instancia);
 		
 	}
 	

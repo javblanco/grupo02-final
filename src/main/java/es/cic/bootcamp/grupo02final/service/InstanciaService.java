@@ -3,16 +3,12 @@ package es.cic.bootcamp.grupo02final.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import es.cic.bootcamp.grupo02final.exception.IdNoValidoException;
 import es.cic.bootcamp.grupo02final.exception.RegistroNoExisteException;
 import es.cic.bootcamp.grupo02final.exception.RegistroYaCreadoException;
-import es.cic.bootcamp.grupo02final.model.Conector;
 import es.cic.bootcamp.grupo02final.model.Instancia;
-import es.cic.bootcamp.grupo02final.repository.ConectorRepository;
 import es.cic.bootcamp.grupo02final.repository.InstanciaRepository;
 
 @Service
@@ -21,7 +17,7 @@ public class InstanciaService {
 	@Autowired
 	private InstanciaRepository instanciaRepository;
 	
-	public Long save(Instancia instancia) {
+	public Long create(Instancia instancia) {
 		
 		if(instancia.getId() != null) {
 			throw new RegistroYaCreadoException("El registro introducido ya existe");

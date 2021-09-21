@@ -24,6 +24,10 @@ public class ConectorController {
 	@Autowired
 	private ConectorService conectorService;
 	
+	public void setConectorService(ConectorService conectorService) {
+		this.conectorService = conectorService;
+	}
+	
 	@PostMapping
 	public Long save(@Valid @RequestBody Conector conector) {
 		
