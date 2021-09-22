@@ -32,7 +32,7 @@ public class ConectorController {
 		this.conectorService = conectorService;
 	}
 	
-	@PostMapping("crearListaInicial")
+	@PostMapping("/crearListaInicial")
     public ResponseEntity<HttpStatus> crearListaInicial() {
         if (conectorService.findAll().isEmpty()) {
             Conector conector1 = new Conector("BBDD", "SQL", "Base de datos");
@@ -46,10 +46,10 @@ public class ConectorController {
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }
 	
-	@GetMapping("/listado")
-	@ResponseBody
-	public List<Conector> findAll(){
-		return conectorService.findAll();
+	@PostMapping(path = "/lista")
+	public ResponseEntity <List<Conector>> findAll(){
+		List<Conector> conector = conectorService.findAll();
+		return new ResponseEntity<List<Conector>>(conector, HttpStatus.OK);
 	}
 
 	@GetMapping("/detalle/{id}")
