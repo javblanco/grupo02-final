@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import es.cic.bootcamp.grupo02final.model.Conector;
 import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.model.Instancia;
 
@@ -23,7 +22,7 @@ class FlujoRepositoryTest {
 	private TestEntityManager entityManager;
 
 	@Test
-	void testSave() {
+	void testCreate() {
 		Flujo flujo = generarFlujo();
 		
 		Flujo flujoCreado = cut.save(flujo);
@@ -113,12 +112,7 @@ class FlujoRepositoryTest {
 		
 		Instancia instancia = generarInstancia();
 		flujo.setInstancia(instancia);
-		
-		List<Conector> conectores = new ArrayList<>();
-		Conector conector = generarConector();
-		conectores.add(conector);
-		flujo.setConectores(conectores);
-		
+	
 		return flujo;
 		
 	}
@@ -135,18 +129,6 @@ class FlujoRepositoryTest {
 		
 	}
 	
-	private Conector generarConector() {
-		
-		Conector conector = new Conector();
-		conector.setLenguaje("Java");
-		conector.setNombre("Conector 1");
-		conector.setTipoServicio("Servicio 1");
-		
-		entityManager.persist(conector);
-		entityManager.flush();
-		
-		return conector;
-	}
 
 
 }

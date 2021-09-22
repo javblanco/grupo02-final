@@ -3,17 +3,13 @@ package es.cic.bootcamp.grupo02final.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import es.cic.bootcamp.grupo02final.model.Conector;
-import es.cic.bootcamp.grupo02final.model.Flujo;
-import es.cic.bootcamp.grupo02final.model.Instancia;
 
 @DataJpaTest
 class ConectorRepositoryTest {
@@ -25,7 +21,7 @@ class ConectorRepositoryTest {
 	private TestEntityManager entityManager;
 
 	@Test
-	void testSave() {
+	void testCreate() {
 		Conector conector = generarConector();
 		
 		Conector conectorCreado = cut.save(conector);
@@ -112,44 +108,9 @@ class ConectorRepositoryTest {
 		conector.setNombre("Conector 1");
 		conector.setTipoServicio("Servicio 1");
 		
-		Instancia instancia = generarInstancia();
-		conector.setInstancia(instancia);
-		
-		Flujo flujo = instancia.getFlujo();
-		conector.setFlujo(flujo);
-		
 		return conector;
 		
 	}
 	
-	private Instancia generarInstancia() {
-		
-		Instancia instancia = new Instancia();
-		instancia.setNombre("Instancia 1");
-		
-		Flujo flujo = generarFlujo();
-		instancia.setFlujo(flujo);
-		
-		entityManager.persist(instancia);
-		entityManager.flush();
-		
-		return instancia;
-		
-	}
-	
-	private Flujo generarFlujo() {
-		
-		Flujo flujo = new Flujo();
-		flujo.setNombre("Flujo 1");
-		flujo.setEstado(true);
-		flujo.setTiempoInicio(LocalDate.now());
-		flujo.setTiempoFin(LocalDate.of(2021, 10, 3));
-		
-		entityManager.persist(flujo);
-		entityManager.flush();
-		
-		return flujo;
-		
-	}
 
 }
