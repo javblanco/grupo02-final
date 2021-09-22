@@ -1,7 +1,10 @@
 package es.cic.bootcamp.grupo02final;
 
 import org.springframework.context.annotation.Configuration;
+<<<<<<< HEAD
 import org.springframework.context.annotation.Profile;
+=======
+>>>>>>> 8b60d04f282c14916663aeed094eb681b31444fb
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;

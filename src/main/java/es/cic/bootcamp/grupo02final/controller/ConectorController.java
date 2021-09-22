@@ -5,6 +5,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
+=======
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+>>>>>>> 8b60d04f282c14916663aeed094eb681b31444fb
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +29,35 @@ public class ConectorController {
 	@Autowired
 	private ConectorService conectorService;
 	
+<<<<<<< HEAD
 	@PostMapping
 	public Long save(@Valid @RequestBody Conector conector) {
 		
 		return conectorService.save(conector);
+=======
+	public void setConectorService(ConectorService conectorService) {
+		this.conectorService = conectorService;
+	}
+	
+	 @PostMapping("crearListaInicial")
+    public ResponseEntity<HttpStatus> crearListaInicial() {
+        if (conectorService.findAll().isEmpty()) {
+            Conector conector1 = new Conector("BBDD", "SQL", "Base de datos");
+            Conector conector2 = new Conector("JavaContection", "Java", "Contector de java");
+            Conector conector3 = new Conector(".NET", "C#", "Microsoft .NET");
+            
+            conectorService.create(conector1);
+            conectorService.create(conector2);
+            conectorService.create(conector3);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+    }
+	
+	@PostMapping
+	public Long create(@Valid @RequestBody Conector conector) {
+		
+		return conectorService.create(conector);
+>>>>>>> 8b60d04f282c14916663aeed094eb681b31444fb
 		
 	}
 	

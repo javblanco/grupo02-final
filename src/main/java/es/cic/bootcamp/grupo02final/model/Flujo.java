@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -31,6 +32,7 @@ public class Flujo {
 	
 	private LocalDate tiempoFin;
 	
+	@NotNull
 	private boolean estado;
 
 	public Long getId() {

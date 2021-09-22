@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
@@ -29,6 +28,21 @@ public class Conector {
 	
 	@NotBlank
 	private String tipoServicio;
+<<<<<<< HEAD
+=======
+
+	public Conector() {
+		super();
+	}
+
+	public Conector(@Length(max = 15) @NotBlank String nombre, @NotBlank String lenguaje,
+			@NotBlank String tipoServicio) {
+		super();
+		this.nombre = nombre;
+		this.lenguaje = lenguaje;
+		this.tipoServicio = tipoServicio;
+	}
+>>>>>>> 8b60d04f282c14916663aeed094eb681b31444fb
 
 	public Long getId() {
 		return id;
