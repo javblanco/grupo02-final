@@ -10,6 +10,7 @@ import { InstanciaComponent } from './instancia/instancia.component';
 
 const routes: Routes = [
   { path: 'conexiones', component: ConexionesComponent},
+  { path: 'conexiones/alta', component: ConexionAddComponent},
   { path: 'conexiones/detalle/:id', component: ConexionAddComponent},
   { path: 'flujo', component: FlujoComponent},
   { path: 'flujo/detalle/:id', component: FlujoAddComponent},

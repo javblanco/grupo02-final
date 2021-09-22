@@ -28,26 +28,27 @@ public class FlujoController {
 		this.flujoService = flujoService;
 	}
 
-    @PostMapping
-    public Long create(@Valid @RequestBody Flujo flujo){
-        return flujoService.create(flujo);
-    }
-
-    @GetMapping("/{id}")
-    @ResponseBody
-    public Flujo findById(@PathVariable(name = "id") Long id){
-       return flujoService.findById(id);
-    }
-
-    @GetMapping
+    @GetMapping("lista")
     @ResponseBody
     public List<Flujo> findAll(){
         return flujoService.findAll();
     }
 
-    @PutMapping
+    @GetMapping("/detalle/{id}")
+    @ResponseBody
+    public Flujo findById(@PathVariable(name = "id") Long id){
+       return flujoService.findById(id);
+    }
+
+    @PostMapping("/detalle")
+    public Long create(@Valid @RequestBody Flujo flujo){
+        return flujoService.create(flujo);
+    }
+
+    @PutMapping("/detalle")
     @ResponseBody
     public Flujo update(@Valid @RequestBody Flujo flujo){
         return flujoService.update(flujo);
     }
+
 }
