@@ -11,7 +11,7 @@ public class InstanciaHelper {
 		
 		InstanciaDTO instanciaDTO = new InstanciaDTO();
 		instanciaDTO.setId(instancia.getId());
-		instanciaDTO.setFlujos(instancia.getFlujos());
+		// instanciaDTO.setFlujos(instancia.getFlujos());
 		instanciaDTO.setNombre(instancia.getNombre());
 		return instanciaDTO;
 	}
