@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import es.cic.bootcamp.grupo02final.model.Flujo;
+import es.cic.bootcamp.grupo02final.dto.FlujoDTO;
 import es.cic.bootcamp.grupo02final.service.FlujoService;
 
 class FlujoControllerTest {
@@ -28,54 +28,54 @@ class FlujoControllerTest {
 
 	@Test
 	void testCreate() {
-		Flujo flujo = new Flujo();
-		when(dependencia.create(flujo)).thenReturn(1L);
+		FlujoDTO flujoDTO = new FlujoDTO();
+		when(dependencia.create(flujoDTO)).thenReturn(1L);
 		
-		Long id = cut.create(flujo);
+		Long id = cut.create(flujoDTO);
 		
 		assertEquals(id, 1L);
-		verify(dependencia, times(1)).create(flujo);
+		verify(dependencia, times(1)).create(flujoDTO);
 		
 	}
 	
 	@Test
 	void testFindById() {
-		Flujo flujo = new Flujo();
-		when(dependencia.findById(1L)).thenReturn(flujo);
+		FlujoDTO flujoDTO = new FlujoDTO();
+		when(dependencia.findById(1L)).thenReturn(flujoDTO);
 		
-		Flujo flujoRecogido = cut.findById(1L);
+		FlujoDTO flujoDTORecogido = cut.findById(1L);
 		
-		assertEquals(flujoRecogido, flujo);
+		assertEquals(flujoDTORecogido, flujoDTO);
 		verify(dependencia, times(1)).findById(1L);
 		
 	}
 	
 	@Test
 	void testFindAll() {
-		Flujo flujo1 = new Flujo();
-		Flujo flujo2 = new Flujo();
-		List<Flujo> flujos = new ArrayList<>();
-		flujos.add(flujo1);
-		flujos.add(flujo2);
+		FlujoDTO flujoDTO1 = new FlujoDTO();
+		FlujoDTO flujoDTO2 = new FlujoDTO();
+		List<FlujoDTO> flujosDTO = new ArrayList<>();
+		flujosDTO.add(flujoDTO1);
+		flujosDTO.add(flujoDTO2);
 		
-		when(dependencia.findAll()).thenReturn(flujos);
+		when(dependencia.findAll()).thenReturn(flujosDTO);
 		
-		List<Flujo> flujosRecogidos = cut.findAll();
+		List<FlujoDTO> flujosDTORecogidos = cut.findAll();
 		
-		assertEquals(flujosRecogidos, flujos);
+		assertEquals(flujosDTORecogidos, flujosDTO);
 		verify(dependencia, times(1)).findAll();
 		
 	}
 	
 	@Test
 	void testUpdate() {
-		Flujo flujo = new Flujo();
-		when(dependencia.update(flujo)).thenReturn(flujo);
+		FlujoDTO flujoDTO = new FlujoDTO();
+		when(dependencia.update(flujoDTO)).thenReturn(flujoDTO);
 		
-		Flujo flujoRecogido = cut.update(flujo);
+		FlujoDTO flujoDTORecogido = cut.update(flujoDTO);
 		
-		assertEquals(flujo, flujoRecogido);
-		verify(dependencia, times(1)).update(flujo);
+		assertEquals(flujoDTO, flujoDTORecogido);
+		verify(dependencia, times(1)).update(flujoDTO);
 		
 	}
 	

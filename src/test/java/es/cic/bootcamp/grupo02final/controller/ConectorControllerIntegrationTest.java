@@ -24,6 +24,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import es.cic.bootcamp.grupo02final.dto.ConectorDTO;
+import es.cic.bootcamp.grupo02final.helper.ConectorHelper;
 import es.cic.bootcamp.grupo02final.model.Conector;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
@@ -37,6 +40,9 @@ class ConectorControllerIntegrationTest {
 	private static final String ADMIN = "ADMIN";
 	
 	private static final String NOMBRE_USUARIO = "administrador";
+	
+	@Autowired
+	private ConectorHelper conectorHelper;
 
 	@PersistenceContext
 	private EntityManager entityManager;	
@@ -50,13 +56,13 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testCreate() throws Exception {
-		Conector conector = generarConector();
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		MvcResult result = this.mvc
 				.perform(mockRequest)
@@ -69,26 +75,26 @@ class ConectorControllerIntegrationTest {
 		String contenido = result.getResponse().getContentAsString();
 		long idResultado = Long.parseLong(contenido);
 
-		conector.setId(idResultado);
+		conectorDTO.setId(idResultado);
 
-		Conector conectorEnBBDD = entityManager.find(Conector.class, idResultado);
+		ConectorDTO conectorDTOEnBBDD = conectorHelper.entity2DTO(entityManager.find(Conector.class, idResultado));
 
-		assertThat(conectorEnBBDD)
+		assertThat(conectorDTOEnBBDD)
 		.usingRecursiveComparison()
-		.isEqualTo(conector);
+		.isEqualTo(conectorDTO);
 	}
 	
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testTamañoNombreNoPermitido_create() throws Exception {
-		Conector conector = generarConector();
-		conector.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -100,14 +106,14 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testNombreVacio_create() throws Exception {
-		Conector conector = generarConector();
-		conector.setNombre("");
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setNombre("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -119,14 +125,14 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testLenguajeVacio_create() throws Exception {
-		Conector conector = generarConector();
-		conector.setLenguaje("");
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setLenguaje("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -138,14 +144,14 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testTipoServicioVacio_create() throws Exception {
-		Conector conector = generarConector();
-		conector.setTipoServicio("");
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setTipoServicio("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -158,14 +164,14 @@ class ConectorControllerIntegrationTest {
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testRegsitroNoExisteException_create() throws Exception {
 
-		Conector conector = generarConector();
-		conector.setId(1L);
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setId(1L);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(conector));
+				.content(mapper.writeValueAsString(conectorDTO));
 
 		this.mvc
 		.perform(mockRequest)
@@ -178,13 +184,13 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testFindById() throws Exception {
-
 		Conector conector = generarConector();
-
 		entityManager.persist(conector);
 		entityManager.flush();
+			
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(conector);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conector/{id}", conector.getId())
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conector/{id}", conectorDTO.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);		
 
@@ -196,13 +202,13 @@ class ConectorControllerIntegrationTest {
 		.andExpect(
 				jsonPath("$",notNullValue()))
 		.andExpect(
-				jsonPath("$.id", is(conector.getId().intValue())))
+				jsonPath("$.id", is(conectorDTO.getId().intValue())))
 		.andExpect(
-				jsonPath("$.lenguaje", is(conector.getLenguaje())))
+				jsonPath("$.lenguaje", is(conectorDTO.getLenguaje())))
 		.andExpect(
-				jsonPath("$.tipoServicio", is(conector.getTipoServicio())))
+				jsonPath("$.tipoServicio", is(conectorDTO.getTipoServicio())))
 		.andExpect(
-				jsonPath("$.nombre", is(conector.getNombre())));
+				jsonPath("$.nombre", is(conectorDTO.getNombre())));
 	}
 
 	@Test
@@ -240,10 +246,10 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testFindAll() throws Exception {
-
 		Conector conector1 = generarConector();
 		entityManager.persist(conector1);
 		entityManager.flush();
+		
 		Conector conector2 = generarConector();
 		entityManager.persist(conector2);
 		entityManager.flush();
@@ -264,23 +270,22 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testUpdate() throws Exception {
-
+		
 		Conector conector = generarConector();
 		entityManager.persist(conector);
 		entityManager.flush();
-		entityManager.detach(conector);
 
-		Conector conectorModificado = generarConector();
-		conectorModificado.setId(conector.getId());
-		conectorModificado.setLenguaje("HTML");
-		conectorModificado.setNombre("Conector 2");
-		conectorModificado.setTipoServicio("Servicio 2");
+		ConectorDTO conectorDTOModificado = conectorHelper.entity2DTO(generarConector());
+		conectorDTOModificado.setId(conector.getId());
+		conectorDTOModificado.setLenguaje("HTML");
+		conectorDTOModificado.setNombre("Conector 2");
+		conectorDTOModificado.setTipoServicio("Servicio 2");
 
 		MockHttpServletRequestBuilder request = put("/conector")
 				.with(csrf())
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(conectorModificado));
+				.content(mapper.writeValueAsString(conectorDTOModificado));
 
 		mvc.perform(request)
 		.andDo(print())
@@ -288,25 +293,25 @@ class ConectorControllerIntegrationTest {
 
 
 
-		Conector conectorEnBBDD = entityManager.find(Conector.class, conector.getId());
+		ConectorDTO conectorDTOEnBBDD = conectorHelper.entity2DTO(entityManager.find(Conector.class, conector.getId()));
 
 
-		assertThat(conectorEnBBDD)
+		assertThat(conectorDTOEnBBDD)
 		.usingRecursiveComparison()
-		.isEqualTo(conectorModificado);
+		.isEqualTo(conectorDTOModificado);
 	}
 	
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testTamañoNombreNoPermitido_update() throws Exception {
-		Conector conector = generarConector();
-		conector.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -318,14 +323,14 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testNombreVacio_update() throws Exception {
-		Conector conector = generarConector();
-		conector.setNombre("");
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setNombre("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -337,14 +342,14 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testLenguajeVacio_update() throws Exception {
-		Conector conector = generarConector();
-		conector.setLenguaje("");
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setLenguaje("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -356,14 +361,14 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testTipoServicioVacio_update() throws Exception {
-		Conector conector = generarConector();
-		conector.setTipoServicio("");
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setTipoServicio("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -376,14 +381,14 @@ class ConectorControllerIntegrationTest {
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testRegistroNoExisteException_update() throws Exception {
 
-		Conector conector = generarConector();
-		conector.setId(1L);
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setId(1L);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		this.mvc
 		.perform(mockRequest)
@@ -396,13 +401,13 @@ class ConectorControllerIntegrationTest {
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testRegistroNoExisteException_update_idNull() throws Exception {
 
-		Conector conector = generarConector();
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		this.mvc
 		.perform(mockRequest)
@@ -415,14 +420,14 @@ class ConectorControllerIntegrationTest {
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testIdNoValidoException_update() throws Exception {
 
-		Conector conector = generarConector();
-		conector.setId(-1L);
+		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		conectorDTO.setId(-1L);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
+				.content(this.mapper.writeValueAsString(conectorDTO));
 
 		this.mvc
 		.perform(mockRequest)
@@ -434,11 +439,10 @@ class ConectorControllerIntegrationTest {
 	@Test
 	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testDeleteById() throws Exception {
-
+		
 		Conector conector = generarConector();
 		entityManager.persist(conector);
 		entityManager.flush();
-
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conector/{id}", conector.getId())
 				.with(csrf())

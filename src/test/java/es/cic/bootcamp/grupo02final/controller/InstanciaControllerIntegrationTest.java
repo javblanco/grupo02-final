@@ -166,7 +166,7 @@ class InstanciaControllerIntegrationTest {
 			.andExpect(
 					jsonPath("$.id", is(instancia.getId().intValue())))
 			.andExpect(
-					jsonPath("$.flujo", hasSize(1)))
+					jsonPath("$.flujos", hasSize(1)))
 			.andExpect(
 					jsonPath("$.nombre", is(instancia.getNombre())));
 	}

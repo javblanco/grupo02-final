@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import es.cic.bootcamp.grupo02final.dto.ConectorDTO;
+import es.cic.bootcamp.grupo02final.helper.ConectorHelper;
 import es.cic.bootcamp.grupo02final.model.Conector;
 import es.cic.bootcamp.grupo02final.service.ConectorService;
 
@@ -25,6 +28,9 @@ public class ConectorController {
 
 	@Autowired
 	private ConectorService conectorService;
+	
+	@Autowired
+	private ConectorHelper conectorHelper;
 	
 	public void setConectorService(ConectorService conectorService) {
 		this.conectorService = conectorService;
@@ -37,23 +43,23 @@ public class ConectorController {
             Conector conector2 = new Conector("JavaContection", "Java", "Contector de java");
             Conector conector3 = new Conector(".NET", "C#", "Microsoft .NET");
             
-            conectorService.create(conector1);
-            conectorService.create(conector2);
-            conectorService.create(conector3);
+            conectorService.create(conectorHelper.entity2DTO(conector1));
+            conectorService.create(conectorHelper.entity2DTO(conector2));
+            conectorService.create(conectorHelper.entity2DTO(conector3));
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }
 	
 	@PostMapping
-	public Long create(@Valid @RequestBody Conector conector) {
+	public Long create(@Valid @RequestBody ConectorDTO conectorDTO) {
 		
-		return conectorService.create(conector);
+		return conectorService.create(conectorDTO);
 		
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseBody
-	public Conector findById(@PathVariable(name = "id") Long id) {
+	public ConectorDTO findById(@PathVariable(name = "id") Long id) {
 		
 		return conectorService.findById(id);
 		
@@ -61,7 +67,7 @@ public class ConectorController {
 	
 	@GetMapping
 	@ResponseBody
-	public List<Conector> findAll(){
+	public List<ConectorDTO> findAll(){
 		
 		return conectorService.findAll();
 		
@@ -69,9 +75,9 @@ public class ConectorController {
 	
 	@PutMapping
 	@ResponseBody
-	public Conector update(@Valid @RequestBody Conector conector) {
+	public ConectorDTO update(@Valid @RequestBody ConectorDTO conectorDTO) {
 		
-		return conectorService.update(conector);
+		return conectorService.update(conectorDTO);
 		
 	}
 	

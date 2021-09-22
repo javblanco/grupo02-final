@@ -5,14 +5,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import es.cic.bootcamp.grupo02final.model.Conector;
+import es.cic.bootcamp.grupo02final.dto.ConectorDTO;
 import es.cic.bootcamp.grupo02final.service.ConectorService;
 
 class ConectorControllerTest {
@@ -31,54 +28,54 @@ class ConectorControllerTest {
 
 	@Test
 	void testCreate() {
-		Conector conector = new Conector();
-		when(dependencia.create(conector)).thenReturn(1L);
+		ConectorDTO conectorDTO = new ConectorDTO();
+		when(dependencia.create(conectorDTO)).thenReturn(1L);
 		
-		Long id = cut.create(conector);
+		Long id = cut.create(conectorDTO);
 		
 		assertEquals(id, 1L);
-		verify(dependencia, times(1)).create(conector);
+		verify(dependencia, times(1)).create(conectorDTO);
 		
 	}
 	
 	@Test
 	void testFindById() {
-		Conector conector = new Conector();
-		when(dependencia.findById(1L)).thenReturn(conector);
+		ConectorDTO conectorDTO = new ConectorDTO();
+		when(dependencia.findById(1L)).thenReturn(conectorDTO);
 		
-		Conector conectorRecogido = cut.findById(1L);
+		ConectorDTO conectorDTORecogido = cut.findById(1L);
 		
-		assertEquals(conectorRecogido, conector);
+		assertEquals(conectorDTORecogido, conectorDTO);
 		verify(dependencia, times(1)).findById(1L);
 		
 	}
 	
 	@Test
 	void testFindAll() {
-		Conector conector1 = new Conector();
-		Conector conector2 = new Conector();
-		List<Conector> conectores = new ArrayList<>();
-		conectores.add(conector1);
-		conectores.add(conector2);
+		ConectorDTO conectorDTO1 = new ConectorDTO();
+		ConectorDTO conectorDTO2 = new ConectorDTO();
+		List<ConectorDTO> conectoresDTO = new ArrayList<>();
+		conectoresDTO.add(conectorDTO1);
+		conectoresDTO.add(conectorDTO2);
 		
-		when(dependencia.findAll()).thenReturn(conectores);
+		when(dependencia.findAll()).thenReturn(conectoresDTO);
 		
-		List<Conector> conectoresRecogidos = cut.findAll();
+		List<ConectorDTO> conectoresDTORecogidos = cut.findAll();
 		
-		assertEquals(conectoresRecogidos, conectores);
+		assertEquals(conectoresDTORecogidos, conectoresDTO);
 		verify(dependencia, times(1)).findAll();
 		
 	}
 	
 	@Test
 	void testUpdate() {
-		Conector conector = new Conector();
-		when(dependencia.update(conector)).thenReturn(conector);
+		ConectorDTO conectorDTO = new ConectorDTO();
+		when(dependencia.update(conectorDTO)).thenReturn(conectorDTO);
 		
-		Conector conectorRecogido = cut.update(conector);
+		ConectorDTO conectorDTORecogido = cut.update(conectorDTO);
 		
-		assertEquals(conector, conectorRecogido);
-		verify(dependencia, times(1)).update(conector);
+		assertEquals(conectorDTO, conectorDTORecogido);
+		verify(dependencia, times(1)).update(conectorDTO);
 		
 	}
 	

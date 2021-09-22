@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import es.cic.bootcamp.grupo02final.model.Instancia;
+import es.cic.bootcamp.grupo02final.dto.InstanciaDTO;
 import es.cic.bootcamp.grupo02final.service.InstanciaService;
 
 class InstanciaControllerTest {
@@ -28,54 +28,54 @@ class InstanciaControllerTest {
 
 	@Test
 	void testCreate() {
-		Instancia instancia = new Instancia();
-		when(dependencia.create(instancia)).thenReturn(1L);
+		InstanciaDTO instanciaDTO = new InstanciaDTO();
+		when(dependencia.create(instanciaDTO)).thenReturn(1L);
 		
-		Long id = cut.create(instancia);
+		Long id = cut.create(instanciaDTO);
 		
 		assertEquals(id, 1L);
-		verify(dependencia, times(1)).create(instancia);
+		verify(dependencia, times(1)).create(instanciaDTO);
 		
 	}
 	
 	@Test
 	void testFindById() {
-		Instancia instancia = new Instancia();
-		when(dependencia.findById(1L)).thenReturn(instancia);
+		InstanciaDTO instanciaDTO = new InstanciaDTO();
+		when(dependencia.findById(1L)).thenReturn(instanciaDTO);
 		
-		Instancia instanciaRecogido = cut.findById(1L);
+		InstanciaDTO instanciaDTORecogido = cut.findById(1L);
 		
-		assertEquals(instanciaRecogido, instancia);
+		assertEquals(instanciaDTORecogido, instanciaDTO);
 		verify(dependencia, times(1)).findById(1L);
 		
 	}
 	
 	@Test
 	void testFindAll() {
-		Instancia instancia1 = new Instancia();
-		Instancia instancia2 = new Instancia();
-		List<Instancia> instancias = new ArrayList<>();
-		instancias.add(instancia1);
-		instancias.add(instancia2);
+		InstanciaDTO instanciaDTO1 = new InstanciaDTO();
+		InstanciaDTO instanciaDTO2 = new InstanciaDTO();
+		List<InstanciaDTO> instanciasDTO = new ArrayList<>();
+		instanciasDTO.add(instanciaDTO1);
+		instanciasDTO.add(instanciaDTO2);
 		
-		when(dependencia.findAll()).thenReturn(instancias);
+		when(dependencia.findAll()).thenReturn(instanciasDTO);
 		
-		List<Instancia> instanciasRecogidos = cut.findAll();
+		List<InstanciaDTO> instanciasDTORecogidos = cut.findAll();
 		
-		assertEquals(instanciasRecogidos, instancias);
+		assertEquals(instanciasDTORecogidos, instanciasDTO);
 		verify(dependencia, times(1)).findAll();
 		
 	}
 	
 	@Test
 	void testUpdate() {
-		Instancia instancia = new Instancia();
-		when(dependencia.update(instancia)).thenReturn(instancia);
+		InstanciaDTO instanciaDTO = new InstanciaDTO();
+		when(dependencia.update(instanciaDTO)).thenReturn(instanciaDTO);
 		
-		Instancia instanciaRecogido = cut.update(instancia);
+		InstanciaDTO instanciaDTORecogido = cut.update(instanciaDTO);
 		
-		assertEquals(instancia, instanciaRecogido);
-		verify(dependencia, times(1)).update(instancia);
+		assertEquals(instanciaDTO, instanciaDTORecogido);
+		verify(dependencia, times(1)).update(instanciaDTO);
 		
 	}
 	

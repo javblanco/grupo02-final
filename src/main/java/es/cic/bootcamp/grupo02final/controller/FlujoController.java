@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import es.cic.bootcamp.grupo02final.model.Flujo;
+import es.cic.bootcamp.grupo02final.dto.FlujoDTO;
 import es.cic.bootcamp.grupo02final.service.FlujoService;
 
 @RestController
@@ -29,25 +28,25 @@ public class FlujoController {
 	}
 
     @PostMapping
-    public Long create(@Valid @RequestBody Flujo flujo){
-        return flujoService.create(flujo);
+    public Long create(@Valid @RequestBody FlujoDTO flujoDTO){
+        return flujoService.create(flujoDTO);
     }
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Flujo findById(@PathVariable(name = "id") Long id){
+    public FlujoDTO findById(@PathVariable(name = "id") Long id){
        return flujoService.findById(id);
     }
 
     @GetMapping
     @ResponseBody
-    public List<Flujo> findAll(){
+    public List<FlujoDTO> findAll(){
         return flujoService.findAll();
     }
 
     @PutMapping
     @ResponseBody
-    public Flujo update(@Valid @RequestBody Flujo flujo){
-        return flujoService.update(flujo);
+    public FlujoDTO update(@Valid @RequestBody FlujoDTO flujoDTO){
+        return flujoService.update(flujoDTO);
     }
 }
