@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import es.cic.bootcamp.grupo02final.dto.InstanciaDTO;
+import es.cic.bootcamp.grupo02final.model.Instancia;
 import es.cic.bootcamp.grupo02final.service.InstanciaService;
 
 @RestController
@@ -23,21 +23,21 @@ public class InstanciaController {
 
 	@Autowired
 	private InstanciaService instanciaService;
-
+	
 	public void setInstanciaService(InstanciaService instanciaService) {
 		this.instanciaService = instanciaService;
 	}
 	
 	@PostMapping
-	public Long create(@Valid @RequestBody InstanciaDTO instanciaDTO) {
+	public Long create(@Valid @RequestBody Instancia instancia) {
 		
-		return instanciaService.create(instanciaDTO);
+		return instanciaService.create(instancia);
 		
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseBody
-	public InstanciaDTO findById(@PathVariable(name = "id") Long id) {
+	public Instancia findById(@PathVariable(name = "id") Long id) {
 		
 		return instanciaService.findById(id);
 		
@@ -45,7 +45,7 @@ public class InstanciaController {
 	
 	@GetMapping
 	@ResponseBody
-	public List<InstanciaDTO> findAll(){
+	public List<Instancia> findAll(){
 		
 		return instanciaService.findAll();
 		
@@ -53,9 +53,9 @@ public class InstanciaController {
 	
 	@PutMapping
 	@ResponseBody
-	public InstanciaDTO update(@Valid @RequestBody InstanciaDTO instanciaDTO) {
+	public Instancia update(@Valid @RequestBody Instancia instancia) {
 		
-		return instanciaService.update(instanciaDTO);
+		return instanciaService.update(instancia);
 		
 	}
 	

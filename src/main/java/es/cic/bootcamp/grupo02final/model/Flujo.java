@@ -1,6 +1,7 @@
 package es.cic.bootcamp.grupo02final.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -31,7 +33,7 @@ public class Flujo {
 	
 	private LocalDate tiempoFin;
 	
-
+	@NotNull
 	private boolean estado;
 
 	public Long getId() {
@@ -104,6 +106,9 @@ public class Flujo {
 		Flujo other = (Flujo) obj;
 		return estado == other.estado && Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre);
 	}
+
+    public void setConectores(List<Conector> conectores) {
+    }
 	
 
 }
