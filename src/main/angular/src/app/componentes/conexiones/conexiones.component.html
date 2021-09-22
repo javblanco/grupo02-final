@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <h2>Lista de Conexiones</h2>
+    <ul class="conexion">
+      <li *ngFor="let conexion of conexiones">
+        <a routerLink="/conexiones/detalle/{{conexion.id}}">
+          <span class="badge">Nombre</span> {{conexion.nombre}} 
+          <span class="badge">Lenguaje</span> {{conexion.lenguaje}}
+          <span class="badge">Tipo servicio</span> {{conexion.tipoServicio}}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-3">
+        <a routerLink="/"> <button type="button" class="btn btn-primary">Volver</button></a>
+      </div>
+      <div class="col-sm-3">
+        <a routerLink="/conexiones/detalle/null"><button type="button" class="btn btn-warning">Crear Conexi&oacute;n</button></a>
+      </div>
+      <div class="col-sm-3"></div>
+    </div>
+  </div>
+</div>
