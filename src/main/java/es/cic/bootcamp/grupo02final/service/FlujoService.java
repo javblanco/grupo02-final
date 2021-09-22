@@ -31,7 +31,7 @@ public class FlujoService {
 		
 		Flujo flujo = new Flujo();
 		
-		flujoDTO.setTiempoFin(LocalDate.now());
+		flujoDTO.setTiempoInicio(LocalDate.now());
 		
         return flujoHelper.entity2DTO(repository.save(flujoHelper.DTO2Entity(flujoDTO, flujo))).getId();
     }
