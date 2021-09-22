@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -22,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -36,10 +34,6 @@ import es.cic.bootcamp.grupo02final.model.Instancia;
 @AutoConfigureMockMvc
 @Transactional
 class InstanciaControllerIntegrationTest {
-	
-	private static final String USUARIO = "USUARIO";
-	
-	private static final String NOMBRE_USUARIO = "usuario";
 
 	@PersistenceContext
 	private EntityManager entityManager;	
@@ -51,13 +45,11 @@ class InstanciaControllerIntegrationTest {
 	private ObjectMapper mapper;
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testCreate() throws Exception {
 		mapper.configure(MapperFeature.USE_GETTERS_AS_SETTERS, false);
 		Instancia instancia = generarInstancia();
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -83,13 +75,11 @@ class InstanciaControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testTamañoNombreNoPermitido_create() throws Exception {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -102,13 +92,11 @@ class InstanciaControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testNombreVacio_create() throws Exception {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -123,14 +111,12 @@ class InstanciaControllerIntegrationTest {
 
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testRegsitroNoExisteException_create() throws Exception {
 
 		Instancia instancia = generarInstancia();
 		instancia.setId(1L);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(instancia));
@@ -144,7 +130,6 @@ class InstanciaControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testFindById() throws Exception {
 
 		Instancia instancia = generarInstancia();
@@ -172,7 +157,6 @@ class InstanciaControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testIdNoValidoException_findById() throws Exception {
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancia/{id}", -1L)
@@ -188,7 +172,6 @@ class InstanciaControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testRegistroNoExiste_findById() throws Exception {
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancia/{id}", 1L)
@@ -204,7 +187,6 @@ class InstanciaControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testFindAll() throws Exception {
 
 		Instancia instancia1 = generarInstancia();
@@ -228,7 +210,6 @@ class InstanciaControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testUpdate() throws Exception {
 
 		Instancia instancia = generarInstancia();
@@ -241,7 +222,6 @@ class InstanciaControllerIntegrationTest {
 		instanciaModificado.setNombre("Instancia 2");
 
 		MockHttpServletRequestBuilder request = put("/instancia")
-				.with(csrf())
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(instanciaModificado));
@@ -261,13 +241,11 @@ class InstanciaControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testTamañoNombreNoPermitido_update() throws Exception {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -280,13 +258,11 @@ class InstanciaControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testNombreVacio_update() throws Exception {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -299,14 +275,12 @@ class InstanciaControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testRegistroNoExisteException_update() throws Exception {
 
 		Instancia instancia = generarInstancia();
 		instancia.setId(1L);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -319,13 +293,11 @@ class InstanciaControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testRegistroNoExisteException_update_idNull() throws Exception {
 
 		Instancia instancia = generarInstancia();
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -338,14 +310,12 @@ class InstanciaControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testIdNoValidoException_update() throws Exception {
 
 		Instancia instancia = generarInstancia();
 		instancia.setId(-1L);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -358,7 +328,6 @@ class InstanciaControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testDeleteById() throws Exception {
 
 		Instancia instancia = generarInstancia();
@@ -367,7 +336,6 @@ class InstanciaControllerIntegrationTest {
 
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/{id}", instancia.getId())
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -382,11 +350,9 @@ class InstanciaControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testIdNoValidoException_deleteById() throws Exception {
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/{id}", -1L)
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -399,11 +365,9 @@ class InstanciaControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = USUARIO)
 	void testRegistroNoEncontrado_deleteById() throws Exception {
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/{id}", 1L)
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -414,36 +378,6 @@ class InstanciaControllerIntegrationTest {
 		.andExpect(status().isBadRequest());
 
 	}
-	
-	@Test
-	void testAccesoNoAutorizado() throws Exception {
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/{id}", 1L)
-				.with(csrf())
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON);
-		
-		this.mvc
-			.perform(mockRequest)
-			.andDo(
-					print())
-			.andExpect(status().isUnauthorized());
-	}
-	
-	@Test
-	@WithMockUser(username = NOMBRE_USUARIO)
-	void testPermisosInsuficientes() throws Exception {
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/{id}", 1L)
-				.with(csrf())
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON);
-		
-		this.mvc
-			.perform(mockRequest)
-			.andDo(
-					print())
-			.andExpect(status().isForbidden());
-	}
-	
 	
 	private Instancia generarInstancia() {
 		Instancia instancia = new Instancia();

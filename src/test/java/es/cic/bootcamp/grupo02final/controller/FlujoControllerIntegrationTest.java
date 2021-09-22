@@ -10,7 +10,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import java.time.LocalDate;
 import javax.persistence.EntityManager;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.hamcrest.Matchers.notNullValue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -31,10 +29,6 @@ import es.cic.bootcamp.grupo02final.model.Flujo;
 @AutoConfigureMockMvc
 @Transactional
 class FlujoControllerIntegrationTest {
-	
-	private static final String ADMIN = "ADMIN";
-	
-	private static final String NOMBRE_USUARIO = "administrador";
 	
 	@Autowired
 	private MockMvc mvc;
@@ -50,12 +44,10 @@ class FlujoControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testCreate() throws Exception {
 		Flujo flujo = generarFlujo();
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujo")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -81,13 +73,11 @@ class FlujoControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testTamañoNombreNoPermitido_create() throws Exception {
 		Flujo flujo = generarFlujo();
 		flujo.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujo")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -100,13 +90,11 @@ class FlujoControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testNombreVacio_create() throws Exception {
 		Flujo flujo = generarFlujo();
 		flujo.setNombre("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujo")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -119,14 +107,12 @@ class FlujoControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testRegsitroNoExisteException_create() throws Exception {
 
 		Flujo flujo = generarFlujo();
 		flujo.setId(1L);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujo")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(flujo));
@@ -140,7 +126,6 @@ class FlujoControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testFindById() throws Exception {
 		Flujo flujo = generarFlujo();
 		entityManager.persist(flujo);
@@ -164,7 +149,6 @@ class FlujoControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testIdNoValidoException_findById() throws Exception {
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/flujo/{id}", -1L)
@@ -180,7 +164,6 @@ class FlujoControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testRegistroNoExiste_findById() throws Exception {
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/flujo/{id}", 1L)
@@ -196,7 +179,6 @@ class FlujoControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testFindAll() throws Exception {
 		Flujo flujo = generarFlujo();
 		Flujo flujo2 = generarFlujo();
@@ -223,7 +205,6 @@ class FlujoControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testUpdate() throws Exception {
 		Flujo flujo = generarFlujo();
 		entityManager.persist(flujo);
@@ -236,7 +217,6 @@ class FlujoControllerIntegrationTest {
 		flujoModificado.setEstado(false);
 		
 		MockHttpServletRequestBuilder requestBuilder = put("/flujo")
-				.with(csrf())
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(flujoModificado));
@@ -253,13 +233,11 @@ class FlujoControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testTamañoNombreNoPermitido_update() throws Exception {
 		Flujo flujo = generarFlujo();
 		flujo.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -272,13 +250,11 @@ class FlujoControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testNombreVacio_update() throws Exception {
 		Flujo flujo = generarFlujo();
 		flujo.setNombre("");
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -291,14 +267,12 @@ class FlujoControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testRegistroNoExisteException_update() throws Exception {
 
 		Flujo flujo = generarFlujo();
 		flujo.setId(1L);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -311,13 +285,11 @@ class FlujoControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testRegistroNoExisteException_update_idNull() throws Exception {
 
 		Flujo flujo = generarFlujo();
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -330,14 +302,12 @@ class FlujoControllerIntegrationTest {
 	}
 	
 	@Test
-	@WithMockUser(username = NOMBRE_USUARIO, roles = ADMIN)
 	void testIdNoValidoException_update() throws Exception {
 
 		Flujo flujo = generarFlujo();
 		flujo.setId(-1L);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo")
-				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
