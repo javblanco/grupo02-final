@@ -28,42 +28,33 @@ public class InstanciaController {
 		this.instanciaService = instanciaService;
 	}
 	
-	@PostMapping
-	public Long create(@Valid @RequestBody Instancia instancia) {
-		
-		return instanciaService.create(instancia);
-		
-	}
 	
-	@GetMapping("/{id}")
-	@ResponseBody
-	public Instancia findById(@PathVariable(name = "id") Long id) {
-		
-		return instanciaService.findById(id);
-		
-	}
-	
-	@GetMapping
+	@GetMapping("/lista")
 	@ResponseBody
 	public List<Instancia> findAll(){
-		
 		return instanciaService.findAll();
-		
+	}
+
+	@GetMapping("/detalle/{id}")
+	@ResponseBody
+	public Instancia findById(@PathVariable(name = "id") Long id) {
+		return instanciaService.findById(id);
+	}
+
+	@PostMapping("detalle")
+	public Long create(@Valid @RequestBody Instancia instancia) {
+		return instanciaService.create(instancia);
 	}
 	
-	@PutMapping
+	@PutMapping("detalle")
 	@ResponseBody
 	public Instancia update(@Valid @RequestBody Instancia instancia) {
-		
 		return instanciaService.update(instancia);
-		
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/detalle/{id}")
 	public void deleteById(@PathVariable (name = "id") Long id) {
-		
 		instanciaService.deleteById(id);
-		
 	}
 
 }

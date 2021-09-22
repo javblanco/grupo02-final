@@ -26,12 +26,22 @@ export class ConexionesComponent implements OnInit {
     }
   }
 
-   _getConexiones(): void {
+  _getConexiones(): void {
     this.conexionService.findConexiones().subscribe(
       (conexiones: Conexion[]) => {
         this.conexiones = conexiones
       }
     );
+  }
+
+  public deleteConexion(conexion: Conexion): void {
+    if(confirm("¿Está seguro de borrar la conexión " + conexion.id + "?")) {
+      this.conexionService.deleteConexion(conexion).subscribe(
+        () => {
+          this._getConexiones();
+        }
+      );
+    }
   }
 
 }
