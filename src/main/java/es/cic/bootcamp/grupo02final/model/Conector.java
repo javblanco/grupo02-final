@@ -29,7 +29,10 @@ public class Conector {
 	@NotBlank
 	private String tipoServicio;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 476574c05a452fdd899b41ee3aa661fd6bce8899
 
 	public Conector() {
 		super();
@@ -42,7 +45,10 @@ public class Conector {
 		this.lenguaje = lenguaje;
 		this.tipoServicio = tipoServicio;
 	}
+<<<<<<< HEAD
 >>>>>>> 8b60d04f282c14916663aeed094eb681b31444fb
+=======
+>>>>>>> 476574c05a452fdd899b41ee3aa661fd6bce8899
 
 	public Long getId() {
 		return id;

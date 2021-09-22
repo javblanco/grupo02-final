@@ -25,11 +25,14 @@ public class InstanciaController {
 	private InstanciaService instanciaService;
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	@PostMapping
 	public Long save(@Valid @RequestBody Instancia instancia) {
 		
 		return instanciaService.save(instancia);
 =======
+=======
+>>>>>>> 476574c05a452fdd899b41ee3aa661fd6bce8899
 	public void setInstanciaService(InstanciaService instanciaService) {
 		this.instanciaService = instanciaService;
 	}
@@ -38,7 +41,10 @@ public class InstanciaController {
 	public Long create(@Valid @RequestBody Instancia instancia) {
 		
 		return instanciaService.create(instancia);
+<<<<<<< HEAD
 >>>>>>> 8b60d04f282c14916663aeed094eb681b31444fb
+=======
+>>>>>>> 476574c05a452fdd899b41ee3aa661fd6bce8899
 		
 	}
 	

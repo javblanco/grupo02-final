@@ -15,6 +15,8 @@ const routes: Routes = [
  {path: 'flujo-add', component: FlujoAddComponent},
  {path: 'instancia-add', component: InstanciaAddComponent},
  {path: 'conexion-add', component: ConexionAddComponent}
+
+
 ];
 
 @NgModule({

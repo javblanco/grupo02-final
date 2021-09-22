@@ -3,17 +3,13 @@ package es.cic.bootcamp.grupo02final.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import es.cic.bootcamp.grupo02final.model.Conector;
-import es.cic.bootcamp.grupo02final.model.Flujo;
-import es.cic.bootcamp.grupo02final.model.Instancia;
 
 @DataJpaTest
 class ConectorRepositoryTest {
@@ -25,7 +21,7 @@ class ConectorRepositoryTest {
 	private TestEntityManager entityManager;
 
 	@Test
-	void testSave() {
+	void testCreate() {
 		Conector conector = generarConector();
 		
 		Conector conectorCreado = cut.save(conector);
