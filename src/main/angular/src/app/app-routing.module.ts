@@ -16,6 +16,7 @@ const routes: Routes = [
  {path: 'instancia-add', component: InstanciaAddComponent},
  {path: 'conexion-add', component: ConexionAddComponent}
 
+
 ];
 
 @NgModule({

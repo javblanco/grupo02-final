@@ -20,7 +20,7 @@ import es.cic.bootcamp.grupo02final.service.FlujoService;
 @RequestMapping("/flujo")
 public class FlujoController {
     
-    @Autowired
+
     private FlujoService flujoService;
     
 	public void setFlujoService(FlujoService flujoService) {
