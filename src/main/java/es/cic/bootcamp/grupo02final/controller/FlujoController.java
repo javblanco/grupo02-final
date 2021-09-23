@@ -28,7 +28,7 @@ public class FlujoController {
 		this.flujoService = flujoService;
 	}
 
-    @GetMapping("lista")
+    @GetMapping("/lista")
     @ResponseBody
     public List<Flujo> findAll(){
         return flujoService.findAll();

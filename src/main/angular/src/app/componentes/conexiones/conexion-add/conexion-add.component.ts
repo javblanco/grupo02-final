@@ -16,32 +16,17 @@ import { ConexionService } from '../conexiones.service';
 export class ConexionAddComponent implements OnInit {
 
   public conexion!: Conexion;
-<<<<<<< HEAD
-
-  constructor(
-    private _conexionService: ConexionService,
-=======
   private _isInsert: boolean = false;
 
   constructor(
     private _conexionService: ConexionService,
     private _router: Router,
->>>>>>> 010243ba5f5a2f9794371a9d8d0e87a27cc2a48f
     private _route: ActivatedRoute,
     private _location: Location
   ) { }
 
   public ngOnInit(): void {
     this.conexion = new Conexion();
-<<<<<<< HEAD
-    const id = Number(this._route.snapshot.paramMap.get('id'));
-    if (id == null) {
-      // Si el id es nulo, es un insert
-      this.conexion = new Conexion();
-    } else {
-      // SI el id no es nulo, es una modificacion
-      this.conexion.id = id;
-=======
     const id = this._route.snapshot.params['id'];
     if (id == null) {
       // Si el id es nulo, es un insert
@@ -51,7 +36,6 @@ export class ConexionAddComponent implements OnInit {
       // Si el id no es nulo, es una modificacion
       this.conexion.id = Number(id);
       this._isInsert = false;
->>>>>>> 010243ba5f5a2f9794371a9d8d0e87a27cc2a48f
       this._getConexion();
     }
   }
@@ -65,17 +49,6 @@ export class ConexionAddComponent implements OnInit {
   }
 
   public save(): void {
-<<<<<<< HEAD
-    this._conexionService.insertConexion(this.conexion).subscribe(
-      () => {
-        this.goBack();
-      }
-    );
-  }
-
-  public goBack(): void {
-    this._location.back();
-=======
     if (this._isInsert) {
       this._conexionService.insertConexion(this.conexion).subscribe(
         () => {
@@ -93,7 +66,6 @@ export class ConexionAddComponent implements OnInit {
 
   public goBack(): void {
     this._router.navigate(['../'+ (!this._isInsert ? '../' : '')], { relativeTo: this._route});
->>>>>>> 010243ba5f5a2f9794371a9d8d0e87a27cc2a48f
   }
 
 }

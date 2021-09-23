@@ -2,7 +2,7 @@ package es.cic.bootcamp.grupo02final.controller;
 
 import java.util.List;
 
-
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import es.cic.bootcamp.grupo02final.dto.ConectorDTO;
-import es.cic.bootcamp.grupo02final.helper.ConectorHelper;
 import es.cic.bootcamp.grupo02final.model.Conector;
 import es.cic.bootcamp.grupo02final.service.ConectorService;
 
@@ -30,9 +27,6 @@ public class ConectorController {
 
 	@Autowired
 	private ConectorService conectorService;
-	
-	@Autowired
-	private ConectorHelper conectorHelper;
 	
 	public void setConectorService(ConectorService conectorService) {
 		this.conectorService = conectorService;
@@ -45,9 +39,6 @@ public class ConectorController {
             Conector conector2 = new Conector("JavaContection", "Java", "Contector de java");
             Conector conector3 = new Conector(".NET", "C#", "Microsoft .NET");
             
-            conectorService.create(conectorHelper.entity2DTO(conector1));
-            conectorService.create(conectorHelper.entity2DTO(conector2));
-            conectorService.create(conectorHelper.entity2DTO(conector3));
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }
@@ -65,13 +56,13 @@ public class ConectorController {
 
 
 	@PostMapping("/detalle")
-	public Long create(@RequestBody Conector conector) {
+	public Long create(@Valid @RequestBody Conector conector) {
 		return conectorService.create(conector);
 	}
 	
 	@PutMapping("/detalle")
 	@ResponseBody
-	public Conector update(@RequestBody Conector conector) {
+	public Conector update(@Valid @RequestBody Conector conector) {
 		return conectorService.update(conector);
 	}
 	
