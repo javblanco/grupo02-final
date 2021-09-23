@@ -103,39 +103,9 @@ class ConectorControllerIntegrationTest {
 		
 	}
 	
-	@Test
-	void testLenguajeVacio_create() throws Exception {
-		Conector conector = generarConector();
-		conector.setLenguaje("");
-
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
-
-		mvc.perform(mockRequest)
-			.andDo(print())
-			.andExpect(status().isBadRequest());
-
-		
-	}
 	
-	@Test
-	void testTipoServicioVacio_create() throws Exception {
-		Conector conector = generarConector();
-		conector.setTipoServicio("");
-
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
-
-		mvc.perform(mockRequest)
-			.andDo(print())
-			.andExpect(status().isBadRequest());
-
-		
-	}
+	
+	
 
 	@Test
 	void testRegsitroNoExisteException_create() throws Exception {
@@ -268,22 +238,7 @@ class ConectorControllerIntegrationTest {
 		.isEqualTo(conectorModificado);
 	}
 	
-	@Test
-	void testTamañoNombreNoPermitido_update() throws Exception {
-		Conector conector = generarConector();
-		conector.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
-
-		mvc.perform(mockRequest)
-			.andDo(print())
-			.andExpect(status().isBadRequest());
-
-		
-	}
+	
 	
 	@Test
 	void testNombreVacio_update() throws Exception {
