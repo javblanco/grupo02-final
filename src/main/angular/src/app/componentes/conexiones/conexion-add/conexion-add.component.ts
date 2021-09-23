@@ -1,10 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
-import { ActivatedRoute } from '@angular/router';
-=======
 import { ActivatedRoute, Router } from '@angular/router';
->>>>>>> 010243ba5f5a2f9794371a9d8d0e87a27cc2a48f
 import { Conexion } from 'src/app/clases/conexion';
 import { ConexionService } from '../conexiones.service';
 
