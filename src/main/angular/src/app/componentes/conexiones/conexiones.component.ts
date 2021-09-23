@@ -45,6 +45,16 @@ export class ConexionesComponent implements OnInit {
     }
   }
 
+  public createConexion(conexion: Conexion): void {
+    if(confirm("¿Está seguro de crear la conexión " + conexion.id + "?")) {
+      this.conexionService.insertConexion(conexion).subscribe(
+        () => {
+          this._getConexiones();
+        }
+      );
+    }
+  }
+
 }
 
 
