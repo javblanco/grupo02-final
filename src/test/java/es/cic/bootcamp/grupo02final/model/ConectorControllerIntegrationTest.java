@@ -69,43 +69,8 @@ class ConectorControllerIntegrationTest {
 		.isEqualTo(conector);
 	}
 	
-	@Test
-	void testTamañoNombreNoPermitido_create() throws Exception {
-		Conector conector = generarConector();
-		conector.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
-
-		mvc.perform(mockRequest)
-			.andDo(print())
-			.andExpect(status().isBadRequest());
-
-		
-	}
 	
-	@Test
-	void testNombreVacio_create() throws Exception {
-		Conector conector = generarConector();
-		conector.setNombre("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conector));
-
-		mvc.perform(mockRequest)
-			.andDo(print())
-			.andExpect(status().isBadRequest());
-
-		
-	}
-	
-	
-	
-	
 
 	@Test
 	void testRegsitroNoExisteException_create() throws Exception {
