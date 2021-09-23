@@ -13,8 +13,8 @@
         <td>{{conexion.lenguaje}}</td>
         <td>{{conexion.tipoServicio}}</td>
         <td>
-          <a routerLink="/conexiones/detalle/{{conexion.id}}"><button id={{conexion.id}} type="button" class="btn btn-sm btn-warning">Editar</button></a>
-          <button id={{conexion.id}}-delete type="button" class="btn btn-sm btn-danger" (click)="deleteConexion(conexion)">Eliminar</button>
+          <a routerLink="/conexiones/detalle/{{conexion.id}}"><button type="button" class="btn btn-sm btn-warning">Editar</button></a>
+          <button type="button" class="btn btn-sm btn-danger" (click)="deleteConexion(conexion)">Eliminar</button>
         </td>
       </tr>
     </table>
