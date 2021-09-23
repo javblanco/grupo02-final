@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -25,8 +26,8 @@ public class Instancia {
 	@NotBlank
 	private String nombre;
 	
-	@OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
-	private List<Flujo> flujos = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Flujo  flujo;
 
 	public Long getId() {
 		return id;
@@ -36,8 +37,8 @@ public class Instancia {
 		return nombre;
 	}
 
-	public List<Flujo> getFlujo() {
-		return flujos;
+	public Flujo getFlujo() {
+		return flujo;
 	}
 
 	public void setId(Long id) {
@@ -48,13 +49,25 @@ public class Instancia {
 		this.nombre = nombre;
 	}
 
-	public void setFlujos(List<Flujo> flujos) {
-		this.flujos = flujos;
+	public void setFlujos(Flujo flujo) {
+		this.flujo = flujo;
+	}
+
+
+	public Instancia(String nombre, Flujo flujo ) {
+		super();
+		this.nombre = nombre;
+		this.flujo = flujo;
+		
+	}
+
+	public Instancia(){
+		super();
 	}
 
 	@Override
 	public String toString() {
-		return "Instancia [id=" + id + ", nombre=" + nombre + ", flujos=" + flujos + "]";
+		return "Instancia [id=" + id + ", nombre=" + nombre + ", flujos=" + flujo + "]";
 	}
 
 	@Override

@@ -1,55 +1,53 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Flujo } from 'src/app/clases/flujo';
-
-
 
 @Injectable({ providedIn: 'root' })
 export class FlujoService {
 
   constructor(
-   
     public httpClient: HttpClient
   ) { }
 
   public crearListaInicial(): Observable<any> {
-    const url = 'http://192.168.56.1:8080/flujo/crearListaInicial';
+    const url = 'http://localhost:8080/flujos/crearListaInicial';
     const body = null;
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     return this.httpClient.post(url, body, {headers: headers});
   }
 
   public findFlujos(): Observable<any> {
-    const url = 'http://192.168.56.1:8080/flujo/lista';
+    const url = 'http://localhost:8080/flujos/lista';
     const body = null;
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     return this.httpClient.post(url, body, {headers: headers});
   }
 
   public getFlujo (flujo: Flujo): Observable<any> {
-    const url = 'http://192.168.56.1:8080/flujo/detalleFlujo';
-    const body = flujo;
-    const headers = new HttpHeaders({'Content-type': 'application/json'});
-    return this.httpClient.put(url, body, {headers: headers});
-
-    
+    const url = `http://localhost:8080/flujos/detalle/${flujo.id}`;
+    const options = { headers: new HttpHeaders({'Content-type': 'application/json'} )};
+    return this.httpClient.get<Flujo>(url, options);
   }
 
   public insertFlujo (flujo: Flujo): Observable<any> {
-    const url = 'http://192.168.56.1:8080/flujo/detalle';
+    const url = 'http://localhost:8080/flujos/detalle';
     const body = flujo;
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     return this.httpClient.post(url, body, {headers: headers});
   }
 
   public updateFlujo (flujo: Flujo): Observable<any> {
-    const url = 'http://192.168.56.1:8080/flujo/detalle';
+    const url = 'http://localhost:8080/flujos/detalle';
     const body = flujo;
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     return this.httpClient.put(url, body, {headers: headers});
   }
 
-  
+  public deleteFlujo (flujo: Flujo): Observable<any> {
+    const url = `http://localhost:8080/flujos/detalle/${flujo.id}`;
+    const options = { headers: new HttpHeaders({'Content-type': 'application/json'} )};
+    return this.httpClient.delete<Flujo>(url, options);
+  }
 
 }

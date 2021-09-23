@@ -26,8 +26,7 @@ public class Flujo {
 	@NotBlank
 	private String nombre;
 	
-	@ManyToOne
-	private Instancia instancia;
+	
 	
 	private LocalDate tiempoInicio;
 	
@@ -44,9 +43,7 @@ public class Flujo {
 		return nombre;
 	}
 
-	public Instancia getInstancia() {
-		return instancia;
-	}
+
 
 	public LocalDate getTiempoInicio() {
 		return tiempoInicio;
@@ -68,9 +65,7 @@ public class Flujo {
 		this.nombre = nombre;
 	}
 
-	public void setInstancia(Instancia instancia) {
-		this.instancia = instancia;
-	}
+	
 
 	public void setTiempoInicio(LocalDate tiempoInicio) {
 		this.tiempoInicio = tiempoInicio;
@@ -86,7 +81,7 @@ public class Flujo {
 
 	@Override
 	public String toString() {
-		return "Flujo [id=" + id + ", nombre=" + nombre + ", instancia=" + instancia + ", conectores=" 
+		return "Flujo [id=" + id + ", nombre=" + nombre +  ", conectores=" 
 				+ ", tiempoInicio=" + tiempoInicio + ", tiempoFin=" + tiempoFin + ", estado=" + estado + "]";
 	}
 
@@ -109,6 +104,20 @@ public class Flujo {
 
     public void setConectores(List<Conector> conectores) {
     }
+
+	public Flujo(String nombre, LocalDate tiempoInicio, LocalDate tiempoFin, boolean estado) {
+		super();
+		this.nombre = nombre;
+		this.tiempoInicio = tiempoInicio;
+		this.tiempoFin = tiempoFin;
+		this.estado = estado;
+	}
+
+	public Flujo(){
+		super();
+	}
+
+	
 	
 
 }

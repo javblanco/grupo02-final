@@ -15,56 +15,76 @@ import es.cic.bootcamp.grupo02final.repository.FlujoRepository;
 
 @Service
 public class FlujoService {
-
-    @Autowired
-    private FlujoRepository repository;
-
-    public long create(Flujo flujo){
-    	
+	
+	@Autowired
+	private FlujoRepository flujoRepository;
+	
+	public Long create(Flujo flujo) {
+		
 		if(flujo.getId() != null) {
 			throw new RegistroYaCreadoException("El registro introducido ya existe");
 		}
-        return repository.save(flujo).getId();
-    }
-
-    public Flujo findById(Long id){
-        if(id <= 0) {
+		
+		return flujoRepository.save(flujo).getId();
+	}
+	
+	public Flujo findById(Long id) {
+		
+		if(id <= 0) {
 			throw new IdNoValidoException("El id introducido no es válido");
 		}
 		
-		Optional<Flujo> optional = repository.findById(id);
+		Optional<Flujo> optional = flujoRepository.findById(id);
 		if(optional.isPresent()) {
 			return optional.get();
 		}else {
 			throw new RegistroNoExisteException("El registro con el id introducido no existe");
 		}
-    }
-
-    public List<Flujo> findAll(){
-        List<Flujo> flujos = new ArrayList<>();
-		repository.findAll()
+	}
+	
+	public List<Flujo> findAll(){
+		
+		List<Flujo> flujos = new ArrayList<>();
+		flujoRepository.findAll()
 			.forEach(flujos::add);
 			
 		return flujos;
-    }
-
-    public Flujo update(Flujo flujo){
-    	
+	}
+	
+	public Flujo update(Flujo flujo) {
+		
 		if(flujo.getId() == null) {
 			throw new RegistroNoExisteException("El registro introducido no existe");
 		}
-    	
-        if(flujo.getId() <= 0) {
-			throw new IdNoValidoException("El id introducido no es válido");
-		}
 		
-		Optional<Flujo> optional = repository.findById(flujo.getId());
+		Optional<Flujo> optional = flujoRepository.findById(flujo.getId());
 		if(optional.isEmpty()) {
 			throw new RegistroNoExisteException("El registro introducido no existe");
 		}
 		
-        flujo =repository.save(flujo);
+		if(flujo.getId() <= 0) {
+			throw new IdNoValidoException("El id introducido no es válido");
+		}
+		
+		
+		return flujoRepository.save(flujo);
+		
+	}
+	
+	public void deleteById(Long id) {
+		
+		if(id <= 0) {
+			throw new IdNoValidoException("El id introducido no es válido");
+		}
+		
+		Optional<Flujo> optional = flujoRepository.findById(id);
+		if(optional.isPresent()) {
+			flujoRepository.deleteById(id);
+		}else {
+			throw new RegistroNoExisteException("El registro con el id introducido no existe");
+		}
+		
+	}
 
-		return flujo;
-    }
 }
+
