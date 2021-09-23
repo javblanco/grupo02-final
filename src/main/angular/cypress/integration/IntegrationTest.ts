@@ -13,7 +13,7 @@ describe("Conexión Test", () => {
     it("Editar conexión", () => {
         cy.visit("/conexiones")
         cy.get(':nth-child(2) > :nth-child(4) > a > .btn').contains("Editar").click()
-        cy.url().should("include", "/conexiones/detalle/3")
+        cy.url().should("include", "/conexiones/detalle/1")
         cy.get("#nombre").clear()
         cy.get("#nombre").type("EDITADO")
         cy.get(".btn").contains("Editar conexión").click()
