@@ -36,7 +36,7 @@ public class Instancia {
 		return nombre;
 	}
 
-	public List<Flujo> getFlujos() {
+	public List<Flujo> getFlujo() {
 		return flujos;
 	}
 

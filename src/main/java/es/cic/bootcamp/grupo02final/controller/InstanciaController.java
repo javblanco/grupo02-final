@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import es.cic.bootcamp.grupo02final.dto.InstanciaDTO;
+import es.cic.bootcamp.grupo02final.model.Instancia;
 import es.cic.bootcamp.grupo02final.service.InstanciaService;
 
 @RestController
@@ -23,47 +23,38 @@ public class InstanciaController {
 
 	@Autowired
 	private InstanciaService instanciaService;
-
+	
 	public void setInstanciaService(InstanciaService instanciaService) {
 		this.instanciaService = instanciaService;
 	}
 	
-	@PostMapping
-	public Long create(@Valid @RequestBody InstanciaDTO instanciaDTO) {
-		
-		return instanciaService.create(instanciaDTO);
-		
-	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/lista")
 	@ResponseBody
-	public InstanciaDTO findById(@PathVariable(name = "id") Long id) {
-		
-		return instanciaService.findById(id);
-		
-	}
-	
-	@GetMapping
-	@ResponseBody
-	public List<InstanciaDTO> findAll(){
-		
+	public List<Instancia> findAll(){
 		return instanciaService.findAll();
-		
 	}
-	
-	@PutMapping
+
+	@GetMapping("/detalle/{id}")
 	@ResponseBody
-	public InstanciaDTO update(@Valid @RequestBody InstanciaDTO instanciaDTO) {
-		
-		return instanciaService.update(instanciaDTO);
-		
+	public Instancia findById(@PathVariable(name = "id") Long id) {
+		return instanciaService.findById(id);
+	}
+
+	@PostMapping("detalle")
+	public Long create(@Valid @RequestBody Instancia instancia) {
+		return instanciaService.create(instancia);
 	}
 	
-	@DeleteMapping("/{id}")
+	@PutMapping("detalle")
+	@ResponseBody
+	public Instancia update(@Valid @RequestBody Instancia instancia) {
+		return instanciaService.update(instancia);
+	}
+	
+	@DeleteMapping("/detalle/{id}")
 	public void deleteById(@PathVariable (name = "id") Long id) {
-		
 		instanciaService.deleteById(id);
-		
 	}
 
 }

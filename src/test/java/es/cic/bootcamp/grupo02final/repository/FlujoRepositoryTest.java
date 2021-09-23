@@ -10,9 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> feature/angular/TESTJASMINE
+=======
+
+>>>>>>> 010243ba5f5a2f9794371a9d8d0e87a27cc2a48f
 import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.model.Instancia;
 
