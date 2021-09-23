@@ -9,6 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/angular/TESTJASMINE
 import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.model.Instancia;
 

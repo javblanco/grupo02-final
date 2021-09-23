@@ -1,6 +1,7 @@
 package es.cic.bootcamp.grupo02final.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -104,6 +105,9 @@ public class Flujo {
 		Flujo other = (Flujo) obj;
 		return estado == other.estado && Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre);
 	}
+
+    public void setConectores(List<Conector> conectores) {
+    }
 	
 
 }

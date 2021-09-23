@@ -2,11 +2,12 @@ package es.cic.bootcamp.grupo02final.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +23,9 @@ import es.cic.bootcamp.grupo02final.helper.ConectorHelper;
 import es.cic.bootcamp.grupo02final.model.Conector;
 import es.cic.bootcamp.grupo02final.service.ConectorService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/conector")
+@RequestMapping(value = "/conexiones")
 public class ConectorController {
 
 	@Autowired
@@ -36,7 +38,7 @@ public class ConectorController {
 		this.conectorService = conectorService;
 	}
 	
-	 @PostMapping("crearListaInicial")
+	@PostMapping("/crearListaInicial")
     public ResponseEntity<HttpStatus> crearListaInicial() {
         if (conectorService.findAll().isEmpty()) {
             Conector conector1 = new Conector("BBDD", "SQL", "Base de datos");
@@ -50,20 +52,31 @@ public class ConectorController {
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }
 	
+<<<<<<< HEAD
 	@PostMapping
 	public Long create(@Valid @RequestBody ConectorDTO conectorDTO) {
 		
 		return conectorService.create(conectorDTO);
 		
+=======
+	@PostMapping(path = "/lista")
+	public ResponseEntity <List<Conector>> findAll(){
+		List<Conector> conector = conectorService.findAll();
+		return new ResponseEntity<List<Conector>>(conector, HttpStatus.OK);
+>>>>>>> feature/angular/TESTJASMINE
 	}
-	
-	@GetMapping("/{id}")
+
+	@GetMapping("/detalle/{id}")
 	@ResponseBody
+<<<<<<< HEAD
 	public ConectorDTO findById(@PathVariable(name = "id") Long id) {
 		
+=======
+	public Conector findById(@PathVariable(name = "id") Long id) {
+>>>>>>> feature/angular/TESTJASMINE
 		return conectorService.findById(id);
-		
 	}
+<<<<<<< HEAD
 	
 	@GetMapping
 	@ResponseBody
@@ -71,21 +84,30 @@ public class ConectorController {
 		
 		return conectorService.findAll();
 		
+=======
+
+	@PostMapping("/detalle")
+	public Long create(@RequestBody Conector conector) {
+		return conectorService.create(conector);
+>>>>>>> feature/angular/TESTJASMINE
 	}
 	
-	@PutMapping
+	@PutMapping("/detalle")
 	@ResponseBody
+<<<<<<< HEAD
 	public ConectorDTO update(@Valid @RequestBody ConectorDTO conectorDTO) {
 		
 		return conectorService.update(conectorDTO);
 		
+=======
+	public Conector update(@RequestBody Conector conector) {
+		return conectorService.update(conector);
+>>>>>>> feature/angular/TESTJASMINE
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/detalle/{id}")
 	public void deleteById(@PathVariable (name = "id") Long id) {
-		
 		conectorService.deleteById(id);
-		
 	}
 
 }
