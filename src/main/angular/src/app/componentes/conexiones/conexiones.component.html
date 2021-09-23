@@ -3,20 +3,18 @@
     <h2>Lista de Conexiones</h2>
     <table>
       <tr>
-        <td>Id</td>
         <td>Nombre</td>
         <td>Lenguaje</td>
         <td>Tipo servicio</td>
         <td><!-- Acciones --></td>
       </tr>
       <tr *ngFor="let conexion of conexiones">
-        <td>{{conexion.id}}</td>
         <td>{{conexion.nombre}}</td>
         <td>{{conexion.lenguaje}}</td>
         <td>{{conexion.tipoServicio}}</td>
         <td>
-          <a routerLink="/conexiones/detalle/{{conexion.id}}"><button type="button" class="btn btn-sm btn-warning">Editar</button></a>
-          <button type="button" class="btn btn-sm btn-danger" (click)="deleteConexion(conexion)">Eliminar</button>
+          <a routerLink="/conexiones/detalle/{{conexion.id}}"><button id={{conexion.id}} type="button" class="btn btn-sm btn-warning">Editar</button></a>
+          <button id={{conexion.id}}-delete type="button" class="btn btn-sm btn-danger" (click)="deleteConexion(conexion)">Eliminar</button>
         </td>
       </tr>
     </table>
