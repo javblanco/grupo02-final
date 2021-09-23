@@ -1,0 +1,49 @@
+<div class="container">
+  <form #detailForm="ngForm" (submit)="save()">
+    <div>
+      <h2>{{(conexion.id != null) ? 'Editar' : 'Crear'}} conexi&oacute;n</h2>
+    </div>
+    <div class="row">
+      <div class="col-lg-1">
+        <label class="form-label" for="idConexion">Id</label>
+        <input type="text" id="idConexion" class="form-control"
+            name="id" [(ngModel)]="conexion.id"
+            disabled/>
+      </div>
+
+      <div class="col-lg-5">
+        <label class="form-label" for="nombre">Nombre</label>
+        <input type="text" id="nombre" class="form-control"
+            name="nombre" [(ngModel)]="conexion.nombre"
+            maxlength="15"
+            required />
+      </div>
+
+      <div class="col-lg-4">
+        <label class="form-label" for="lenguaje">Lenguaje</label>
+        <input type="text" id="lenguaje" class="form-control"
+            name="lenguaje" [(ngModel)]="conexion.lenguaje"
+            required />
+      </div>
+
+      <div class="col-lg-2">
+        <label class="form-label" for="tipoServicio">Tipo de servicio</label>
+        <input type="text" id="tipoServicio" class="form-control" 
+            name="tipoServicio" [(ngModel)]="conexion.tipoServicio"
+            required />
+      </div>
+    </div>
+    <div class="row"><br/></div>
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-3">
+        <button type="button" class="btn btn-sm btn-primary" (click)="goBack()">Volver</button>
+      </div>
+      <div class="col-lg-3">
+        <button type="submit" class="btn btn-sm btn-warning"
+                [disabled]="!detailForm.form.valid">{{(conexion.id != null) ? 'Editar' : 'Crear'}} conexi&oacute;n</button>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+  </form>
+</div>

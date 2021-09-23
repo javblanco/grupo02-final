@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -23,8 +22,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import es.cic.bootcamp.grupo02final.dto.ConectorDTO;
-import es.cic.bootcamp.grupo02final.helper.ConectorHelper;
 import es.cic.bootcamp.grupo02final.model.Conector;
 
 
@@ -33,9 +30,6 @@ import es.cic.bootcamp.grupo02final.model.Conector;
 @AutoConfigureMockMvc
 @Transactional
 class ConectorControllerIntegrationTest {
-	
-	@Autowired
-	private ConectorHelper conectorHelper;
 
 	@PersistenceContext
 	private EntityManager entityManager;	
@@ -48,12 +42,12 @@ class ConectorControllerIntegrationTest {
 
 	@Test
 	void testCreate() throws Exception {
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		Conector conector = generarConector();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		MvcResult result = this.mvc
 				.perform(mockRequest)
@@ -66,24 +60,24 @@ class ConectorControllerIntegrationTest {
 		String contenido = result.getResponse().getContentAsString();
 		long idResultado = Long.parseLong(contenido);
 
-		conectorDTO.setId(idResultado);
+		conector.setId(idResultado);
 
-		ConectorDTO conectorDTOEnBBDD = conectorHelper.entity2DTO(entityManager.find(Conector.class, idResultado));
+		Conector conectorEnBBDD = entityManager.find(Conector.class, idResultado);
 
-		assertThat(conectorDTOEnBBDD)
+		assertThat(conectorEnBBDD)
 		.usingRecursiveComparison()
-		.isEqualTo(conectorDTO);
+		.isEqualTo(conector);
 	}
 	
 	@Test
 	void testTamañoNombreNoPermitido_create() throws Exception {
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		Conector conector = generarConector();
+		conector.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -94,13 +88,13 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	void testNombreVacio_create() throws Exception {
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setNombre("");
+		Conector conector = generarConector();
+		conector.setNombre("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -111,13 +105,13 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	void testLenguajeVacio_create() throws Exception {
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setLenguaje("");
+		Conector conector = generarConector();
+		conector.setLenguaje("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -128,13 +122,13 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	void testTipoServicioVacio_create() throws Exception {
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setTipoServicio("");
+		Conector conector = generarConector();
+		conector.setTipoServicio("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -146,13 +140,13 @@ class ConectorControllerIntegrationTest {
 	@Test
 	void testRegsitroNoExisteException_create() throws Exception {
 
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setId(1L);
+		Conector conector = generarConector();
+		conector.setId(1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(conectorDTO));
+				.content(mapper.writeValueAsString(conector));
 
 		this.mvc
 		.perform(mockRequest)
@@ -168,9 +162,7 @@ class ConectorControllerIntegrationTest {
 		entityManager.persist(conector);
 		entityManager.flush();
 			
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(conector);
-
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conector/{id}", conectorDTO.getId())
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conexiones/detalle/{id}", conector.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);		
 
@@ -182,19 +174,19 @@ class ConectorControllerIntegrationTest {
 		.andExpect(
 				jsonPath("$",notNullValue()))
 		.andExpect(
-				jsonPath("$.id", is(conectorDTO.getId().intValue())))
+				jsonPath("$.id", is(conector.getId().intValue())))
 		.andExpect(
-				jsonPath("$.lenguaje", is(conectorDTO.getLenguaje())))
+				jsonPath("$.lenguaje", is(conector.getLenguaje())))
 		.andExpect(
-				jsonPath("$.tipoServicio", is(conectorDTO.getTipoServicio())))
+				jsonPath("$.tipoServicio", is(conector.getTipoServicio())))
 		.andExpect(
-				jsonPath("$.nombre", is(conectorDTO.getNombre())));
+				jsonPath("$.nombre", is(conector.getNombre())));
 	}
 
 	@Test
 	void testIdNoValidoException_findById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conector/{id}", -1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conexiones/detalle/{id}", -1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -209,7 +201,7 @@ class ConectorControllerIntegrationTest {
 	@Test
 	void testRegistroNoExiste_findById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conector/{id}", 1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conexiones/detalle/{id}", 1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -232,7 +224,7 @@ class ConectorControllerIntegrationTest {
 		entityManager.flush();
 
 		MockHttpServletRequestBuilder request =
-				get("/conector")
+				MockMvcRequestBuilders.post("/conexiones/lista")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON);
 
@@ -251,16 +243,16 @@ class ConectorControllerIntegrationTest {
 		entityManager.persist(conector);
 		entityManager.flush();
 
-		ConectorDTO conectorDTOModificado = conectorHelper.entity2DTO(generarConector());
-		conectorDTOModificado.setId(conector.getId());
-		conectorDTOModificado.setLenguaje("HTML");
-		conectorDTOModificado.setNombre("Conector 2");
-		conectorDTOModificado.setTipoServicio("Servicio 2");
+		Conector conectorModificado = generarConector();
+		conectorModificado.setId(conector.getId());
+		conectorModificado.setLenguaje("HTML");
+		conectorModificado.setNombre("Conector 2");
+		conectorModificado.setTipoServicio("Servicio 2");
 
-		MockHttpServletRequestBuilder request = put("/conector")
+		MockHttpServletRequestBuilder request = put("/conexiones/detalle")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(conectorDTOModificado));
+				.content(mapper.writeValueAsString(conectorModificado));
 
 		mvc.perform(request)
 		.andDo(print())
@@ -268,23 +260,23 @@ class ConectorControllerIntegrationTest {
 
 
 
-		ConectorDTO conectorDTOEnBBDD = conectorHelper.entity2DTO(entityManager.find(Conector.class, conector.getId()));
+		Conector conectorEnBBDD = entityManager.find(Conector.class, conector.getId());
 
 
-		assertThat(conectorDTOEnBBDD)
+		assertThat(conectorEnBBDD)
 		.usingRecursiveComparison()
-		.isEqualTo(conectorDTOModificado);
+		.isEqualTo(conectorModificado);
 	}
 	
 	@Test
 	void testTamañoNombreNoPermitido_update() throws Exception {
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		Conector conector = generarConector();
+		conector.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -295,13 +287,13 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	void testNombreVacio_update() throws Exception {
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setNombre("");
+		Conector conector = generarConector();
+		conector.setNombre("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -312,13 +304,13 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	void testLenguajeVacio_update() throws Exception {
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setLenguaje("");
+		Conector conector = generarConector();
+		conector.setLenguaje("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -329,13 +321,13 @@ class ConectorControllerIntegrationTest {
 	
 	@Test
 	void testTipoServicioVacio_update() throws Exception {
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setTipoServicio("");
+		Conector conector = generarConector();
+		conector.setTipoServicio("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -347,13 +339,13 @@ class ConectorControllerIntegrationTest {
 	@Test
 	void testRegistroNoExisteException_update() throws Exception {
 
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setId(1L);
+		Conector conector = generarConector();
+		conector.setId(1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		this.mvc
 		.perform(mockRequest)
@@ -365,12 +357,12 @@ class ConectorControllerIntegrationTest {
 	@Test
 	void testRegistroNoExisteException_update_idNull() throws Exception {
 
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
+		Conector conector = generarConector();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		this.mvc
 		.perform(mockRequest)
@@ -382,13 +374,13 @@ class ConectorControllerIntegrationTest {
 	@Test
 	void testIdNoValidoException_update() throws Exception {
 
-		ConectorDTO conectorDTO = conectorHelper.entity2DTO(generarConector());
-		conectorDTO.setId(-1L);
+		Conector conector = generarConector();
+		conector.setId(-1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conector")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(conectorDTO));
+				.content(this.mapper.writeValueAsString(conector));
 
 		this.mvc
 		.perform(mockRequest)
@@ -404,7 +396,7 @@ class ConectorControllerIntegrationTest {
 		entityManager.persist(conector);
 		entityManager.flush();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conector/{id}", conector.getId())
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conexiones/detalle/{id}", conector.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -421,7 +413,7 @@ class ConectorControllerIntegrationTest {
 	@Test
 	void testIdNoValidoException_deleteById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conector/{id}", -1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conexiones/detalle/{id}", -1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -436,7 +428,7 @@ class ConectorControllerIntegrationTest {
 	@Test
 	void testRegistroNoEncontrado_deleteById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conector/{id}", 1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conexiones/detalle/{id}", 1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 

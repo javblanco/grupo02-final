@@ -13,40 +13,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import es.cic.bootcamp.grupo02final.dto.FlujoDTO;
+
+import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.service.FlujoService;
 
 @RestController
 @RequestMapping("/flujo")
 public class FlujoController {
     
-	@Autowired
+    @Autowired
     private FlujoService flujoService;
     
 	public void setFlujoService(FlujoService flujoService) {
 		this.flujoService = flujoService;
 	}
 
-    @PostMapping
-    public Long create(@Valid @RequestBody FlujoDTO flujoDTO){
-        return flujoService.create(flujoDTO);
-    }
-
-    @GetMapping("/{id}")
+    @GetMapping("/lista")
     @ResponseBody
-    public FlujoDTO findById(@PathVariable(name = "id") Long id){
-       return flujoService.findById(id);
-    }
-
-    @GetMapping
-    @ResponseBody
-    public List<FlujoDTO> findAll(){
+    public List<Flujo> findAll(){
         return flujoService.findAll();
     }
 
-    @PutMapping
+    @GetMapping("/detalle/{id}")
     @ResponseBody
-    public FlujoDTO update(@Valid @RequestBody FlujoDTO flujoDTO){
-        return flujoService.update(flujoDTO);
+    public Flujo findById(@PathVariable(name = "id") Long id){
+       return flujoService.findById(id);
     }
+
+    @PostMapping("/detalle")
+    public Long create(@Valid @RequestBody Flujo flujo){
+        return flujoService.create(flujo);
+    }
+
+    @PutMapping("/detalle")
+    @ResponseBody
+    public Flujo update(@Valid @RequestBody Flujo flujo){
+        return flujoService.update(flujo);
+    }
+
 }
