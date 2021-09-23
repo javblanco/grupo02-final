@@ -1,18 +1,15 @@
 <div class="container">
   <div class="row">
     <h2>Lista de Instancias</h2>
-    <table>
+    <table id="customers">
       <tr>
         <td>Id</td>
         <td>Nombre</td>
-        <td>Flujo</td>
-        
         <td><!-- Acciones --></td>
       </tr>
       <tr *ngFor="let instancia of instancia">
         <td>{{instancia.id}}</td>
         <td>{{instancia.nombre}}</td>
-        <td>{{instancia.flujo}}</td>
         <td>
           <a routerLink="/instancias/detalle/{{instancia.id}}"><button type="button" class="btn btn-sm btn-warning">Editar</button></a>
           <button type="button" class="btn btn-sm btn-danger" (click)="deleteInstancia(instancia)">Eliminar</button>
@@ -20,6 +17,7 @@
       </tr>
     </table>
   </div>
+  <div class="row"><br/></div>
   <div class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-3">

@@ -16,14 +16,8 @@ export class FlujosComponent implements OnInit {
   ) { }
 
 
-   ngOnInit(): void {
-    if (this.flujos.length == 0) {
-      this.flujoService.crearListaInicial().subscribe(
-        () => {
-          this._getFlujos();
-        }
-      );
-    }
+  public ngOnInit(): void {
+    this._getFlujos();
   }
 
   _getFlujos(): void {

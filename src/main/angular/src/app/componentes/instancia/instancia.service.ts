@@ -27,13 +27,10 @@ export class InstanciaService {
     return this.httpClient.post(url, body, {headers: headers});
   }
 
-  public getInstancias (instancia: Instancia): Observable<any> {
-    const url = 'http://localhost:8080/instancias/detalleInstancia';
-    const body = instancia;
-    const headers = new HttpHeaders({'Content-type': 'application/json'});
-    return this.httpClient.put(url, body, {headers: headers});
-
-    
+  public getInstancia (instancia: Instancia): Observable<any> {
+    const url = `http://localhost:8080/instancias/detalle/${instancia.id}`;
+    const options = { headers: new HttpHeaders({'Content-type': 'application/json'} )};
+    return this.httpClient.get<Instancia>(url, options);
   }
 
   public insertInstancia (instancia: Instancia): Observable<any> {
@@ -51,11 +48,9 @@ export class InstanciaService {
   }
 
   public deleteInstancia (instancia: Instancia): Observable<any> {
-    const url = `http://localhost:8080/instancia/detalle/${instancia.id}`;
+    const url = `http://localhost:8080/instancias/detalle/${instancia.id}`;
     const options = { headers: new HttpHeaders({'Content-type': 'application/json'} )};
     return this.httpClient.delete<Instancia>(url, options);
   }
-
-  
 
 }

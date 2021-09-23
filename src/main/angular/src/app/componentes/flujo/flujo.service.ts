@@ -10,13 +10,6 @@ export class FlujoService {
     public httpClient: HttpClient
   ) { }
 
-  public crearListaInicial(): Observable<any> {
-    const url = 'http://localhost:8080/flujos/crearListaInicial';
-    const body = null;
-    const headers = new HttpHeaders({'Content-type': 'application/json'});
-    return this.httpClient.post(url, body, {headers: headers});
-  }
-
   public findFlujos(): Observable<any> {
     const url = 'http://localhost:8080/flujos/lista';
     const body = null;

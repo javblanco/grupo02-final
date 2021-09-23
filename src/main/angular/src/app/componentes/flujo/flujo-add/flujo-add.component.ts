@@ -2,6 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Flujo } from 'src/app/clases/flujo';
+import { Instancia } from 'src/app/clases/instancia';
+import { InstanciaService } from '../../instancia/instancia.service';
 import { FlujoService } from '../flujo.service';
 
 @Component({
@@ -13,9 +15,11 @@ export class FlujoAddComponent implements OnInit {
 
   public flujo!: Flujo;
   private _isInsert: boolean = false;
+  public instanciasCombo!: Instancia[];
 
   constructor(
     private _flujoService: FlujoService,
+    private _instanciaService: InstanciaService,
     private _router: Router,
     private _route: ActivatedRoute,
     private _location: Location
@@ -24,9 +28,17 @@ export class FlujoAddComponent implements OnInit {
   public ngOnInit(): void {
     this.flujo = new Flujo();
     const id = this._route.snapshot.params['id'];
+
+    this.instanciasCombo = [];
+    this._instanciaService.findInstancias().subscribe(
+      (instancias: Instancia[]) => {
+        this.instanciasCombo = instancias;
+      }
+    );
     if (id == null) {
       // Si el id es nulo, es un insert
       this.flujo = new Flujo();
+      this.flujo.instancia = new Instancia();
       this._isInsert = true;
     } else {
       // Si el id no es nulo, es una modificacion

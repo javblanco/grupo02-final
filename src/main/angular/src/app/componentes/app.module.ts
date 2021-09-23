@@ -26,9 +26,7 @@ import { InstanciaComponent } from './instancia/instancia.component';
     InstanciaAddComponent,
     FlujosComponent,
     FlujoAddComponent,
-    FooterComponent,
- 
-    
+    FooterComponent
   ],
   imports: [
     BrowserModule,

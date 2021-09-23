@@ -10,36 +10,32 @@
             name="id" [(ngModel)]="flujo.id"
             disabled/>
       </div>
-
       <div class="col-lg-2">
         <label class="form-label" for="nombre">Nombre</label>
         <input type="text" id="nombre" class="form-control"
-            name="nombre" [(ngModel)]="flujo.nombre"
-            maxlength="15"
-            required />
+                name="nombre" [(ngModel)]="flujo.nombre"
+                maxlength="15"
+                required />
       </div>
-
-      
-
       <div class="col-lg-2">
         <label class="form-label" for="tiempoInicio">Fecha Inicio</label>
-        <input type="datetime-local" id="tiempoInicio" class="form-control" 
-            name="tiempoInicio" [(ngModel)]="flujo.tiempoInicio"
-            required />
+        <input type="datetime" id="tiempoInicio" class="form-control" 
+            name="tiempoInicio" [(ngModel)]="flujo.tiempoInicio" />
       </div>
       <div class="col-lg-2">
         <label class="form-label" for="tiempoFin">Fecha Fin</label>
         <input type="datetime" id="tiempoFin" class="form-control" 
-            name="tiempoFin" [(ngModel)]="flujo.tiempoFin"
-            required />
+            name="tiempoFin" [(ngModel)]="flujo.tiempoFin" />
       </div>
-
       <div class="col-lg-2">
         <label class="form-label" for="estado">¿Activo?</label>
-        <input type="radio" id="estado" name="estado" [(ngModel)]="flujo.estado" [value]="true">
-  
-        
-            
+        <input type="checkbox" id="estado" name="estado" [(ngModel)]="flujo.estado" [value]="true">   
+      </div>
+      <div class="col-lg-3">
+        <label class="form-label" for="instancia">Instancia</label>
+        <select class="form-control" id="instancia" name="instancia" [(ngModel)]="flujo.instancia" placeholder="Elige una opción" >
+          <option *ngFor="let option of instanciasCombo" [ngValue]="option">{{'[' + option.id + '] ' + option.nombre}}</option>
+        </select>
       </div>
     </div>
     <div class="row"><br/></div>

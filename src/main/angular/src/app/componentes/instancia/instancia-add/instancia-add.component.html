@@ -7,26 +7,17 @@
       <div class="col-lg-1">
         <label class="form-label" for="idInstancia">Id</label>
         <input type="text" id="idInstancia" class="form-control"
-            name="id" [(ngModel)]="instancia.id"
-            disabled/>
+                name="id" [(ngModel)]="instancia.id"
+                disabled/>
       </div>
 
       <div class="col-lg-5">
-        <label class="form-label" for="nombre">Nombre</label>
-        <input type="text" id="nombre" class="form-control"
-            name="nombre" [(ngModel)]="instancia.nombre"
-            maxlength="15"
-            required />
+        <label class="form-label" for="nombreInstancia">Nombre</label>
+        <input type="text" id="nombreInstancia" class="form-control"
+              name="nombre" [(ngModel)]="instancia.nombre"
+              maxlength="15"
+              required />
       </div>
-
-      <div class="col-lg-4">
-        <label class="form-label" for="flujo">Flujo</label>
-        <input type="text" id="flujo" class="form-control"
-            name="flujo" [(ngModel)]="instancia.flujo"
-            required />
-      </div>
-
-      
     </div>
     <div class="row"><br/></div>
     <div class="row">

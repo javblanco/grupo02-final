@@ -15,15 +15,8 @@ export class InstanciaComponent implements OnInit {
     private instanciaService: InstanciaService
   ) { }
 
-
-   ngOnInit(): void {
-    if (this.instancia.length == 0) {
-      this.instanciaService.crearListaInicial().subscribe(
-        () => {
-          this._getInstancias();
-        }
-      );
-    }
+  public ngOnInit(): void {
+    this._getInstancias();
   }
 
   _getInstancias(): void {

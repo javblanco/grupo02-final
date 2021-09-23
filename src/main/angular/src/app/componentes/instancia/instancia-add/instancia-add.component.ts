@@ -37,7 +37,7 @@ export class InstanciaAddComponent implements OnInit {
   }
 
   private _getInstancia(): void {
-    this._instanciaService.getInstancias(this.instancia).subscribe(
+    this._instanciaService.getInstancia(this.instancia).subscribe(
       (instancia: Instancia) => {
         this.instancia = instancia
       }

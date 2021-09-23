@@ -3,8 +3,10 @@ package es.cic.bootcamp.grupo02final.model;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,11 +28,12 @@ public class Flujo {
 	@NotBlank
 	private String nombre;
 	
-	
-	
 	private LocalDate tiempoInicio;
 	
 	private LocalDate tiempoFin;
+
+	@ManyToOne
+	private Instancia instancia;
 	
 	@NotNull
 	private boolean estado;
@@ -43,14 +46,16 @@ public class Flujo {
 		return nombre;
 	}
 
-
-
 	public LocalDate getTiempoInicio() {
 		return tiempoInicio;
 	}
 
 	public LocalDate getTiempoFin() {
 		return tiempoFin;
+	}
+
+	public Instancia getInstancia() {
+		return instancia;
 	}
 
 	public boolean isEstado() {
@@ -65,8 +70,6 @@ public class Flujo {
 		this.nombre = nombre;
 	}
 
-	
-
 	public void setTiempoInicio(LocalDate tiempoInicio) {
 		this.tiempoInicio = tiempoInicio;
 	}
@@ -75,14 +78,20 @@ public class Flujo {
 		this.tiempoFin = tiempoFin;
 	}
 
+	public void setInstancia(Instancia instancia) {
+		this.instancia = instancia;
+	}
+
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
 
 	@Override
 	public String toString() {
-		return "Flujo [id=" + id + ", nombre=" + nombre +  ", conectores=" 
-				+ ", tiempoInicio=" + tiempoInicio + ", tiempoFin=" + tiempoFin + ", estado=" + estado + "]";
+		return "Flujo [id=" + id + ", nombre=" + nombre 
+					+ ", tiempoInicio=" + tiempoInicio + ", tiempoFin=" + tiempoFin 
+					+ ", instancia=" + (!Objects.isNull(instancia) ? instancia.toString() : null)
+					+ ", estado=" + estado + "]";
 	}
 
 	@Override
@@ -105,19 +114,17 @@ public class Flujo {
     public void setConectores(List<Conector> conectores) {
     }
 
-	public Flujo(String nombre, LocalDate tiempoInicio, LocalDate tiempoFin, boolean estado) {
+	public Flujo(String nombre, LocalDate tiempoInicio, LocalDate tiempoFin, Instancia instancia, boolean estado) {
 		super();
 		this.nombre = nombre;
 		this.tiempoInicio = tiempoInicio;
 		this.tiempoFin = tiempoFin;
+		this.instancia = instancia;
 		this.estado = estado;
 	}
 
 	public Flujo(){
 		super();
 	}
-
-	
-	
 
 }

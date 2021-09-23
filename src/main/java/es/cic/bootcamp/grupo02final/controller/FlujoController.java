@@ -1,8 +1,6 @@
 package es.cic.bootcamp.grupo02final.controller;
 
-import java.time.LocalDate;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,21 +31,6 @@ public class FlujoController {
 	public void setFlujoService(FlujoService flujoService) {
 		this.flujoService = flujoService;
 	}
-	
-	@PostMapping("/crearListaInicial")
-    public ResponseEntity<HttpStatus> crearListaInicial() {
-        if (flujoService.findAll().isEmpty()) {
-            Flujo flujo1 = new Flujo("S2D4", LocalDate.of(2020, 12, 12),LocalDate.of(2020, 12, 12), true);
-            Flujo flujo2 = new Flujo("S54E", LocalDate.of(2020, 10, 12), LocalDate.of(2020, 10, 12), false);
-            Flujo flujo3 = new Flujo("S9D8", LocalDate.of(2020, 8, 10), LocalDate.of(2020, 12, 12), false);
-            
-	
-            flujoService.create(flujo1);
-            flujoService.create(flujo2);
-            flujoService.create(flujo3);
-        }
-        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-    }
 	
 	@PostMapping(path = "/lista")
 	public ResponseEntity <List<Flujo>> findAll(){

@@ -1,17 +1,14 @@
 package es.cic.bootcamp.grupo02final.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -25,9 +22,6 @@ public class Instancia {
 	@Length(max = 15)
 	@NotBlank
 	private String nombre;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Flujo  flujo;
 
 	public Long getId() {
 		return id;
@@ -35,10 +29,6 @@ public class Instancia {
 
 	public String getNombre() {
 		return nombre;
-	}
-
-	public Flujo getFlujo() {
-		return flujo;
 	}
 
 	public void setId(Long id) {
@@ -49,16 +39,9 @@ public class Instancia {
 		this.nombre = nombre;
 	}
 
-	public void setFlujos(Flujo flujo) {
-		this.flujo = flujo;
-	}
-
-
-	public Instancia(String nombre, Flujo flujo ) {
+	public Instancia(String nombre) {
 		super();
 		this.nombre = nombre;
-		this.flujo = flujo;
-		
 	}
 
 	public Instancia(){
@@ -67,7 +50,7 @@ public class Instancia {
 
 	@Override
 	public String toString() {
-		return "Instancia [id=" + id + ", nombre=" + nombre + ", flujos=" + flujo + "]";
+		return "Instancia [id=" + id + ", nombre=" + nombre + "]";
 	}
 
 	@Override
@@ -86,7 +69,5 @@ public class Instancia {
 		Instancia other = (Instancia) obj;
 		return Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre);
 	}
-
-	
 
 }

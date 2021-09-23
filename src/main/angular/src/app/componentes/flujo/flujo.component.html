@@ -1,28 +1,31 @@
 <div class="container">
   <div class="row">
     <h2>Lista de Flujos</h2>
-    <table>
+    <table id="customers">
       <tr>
         <td>Id</td>
         <td>Nombre</td>
         <td>Fecha Inicio</td>
         <td>Fecha Fin</td>
         <td>Estado</td>
+        <td>Instancia</td>
         <td><!-- Acciones --></td>
       </tr>
       <tr *ngFor="let flujo of flujos">
         <td>{{flujo.id}}</td>
         <td>{{flujo.nombre}}</td>
-        <td>{{flujo.tiempoInicio | date:'dd/mm/yyyy'}}</td>
-        <td>{{flujo.tiempoFin | date:'dd/mm/yyyy'}}</td>
+        <td>{{flujo.tiempoInicio | date:'dd/MM/yyyy'}}</td>
+        <td>{{flujo.tiempoFin | date:'dd/MM/yyyy'}}</td>
         <td>{{flujo.estado}}</td>
+        <td>{{flujo.instancia ? ('[' + flujo.instancia.id + '] ' + flujo.instancia.nombre) : '' }}</td>
         <td>
           <a routerLink="/flujos/detalle/{{flujo.id}}"><button type="button" class="btn btn-sm btn-warning">Editar</button></a>
-          <button type="button" class="btn btn-sm btn-danger" (click)="deleteFlujo(flujo)">Eliminar</button>
+          <button *ngIf="flujo.estado" type="button" class="btn btn-sm btn-danger" (click)="deleteFlujo(flujo)">Eliminar</button>
         </td>
       </tr>
     </table>
   </div>
+  <div class="row"><br/></div>
   <div class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-3">
