@@ -33,6 +33,7 @@ public class InicioController {
 		this.conectorService = conectorService;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@PostMapping("/rellenarTablas")
     public ResponseEntity<HttpStatus> crearListaInicial() {
 
