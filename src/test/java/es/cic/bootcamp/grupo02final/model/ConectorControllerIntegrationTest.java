@@ -1,18 +1,14 @@
-package es.cic.bootcamp.grupo02final.controller;
+package es.cic.bootcamp.grupo02final.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -25,15 +21,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import es.cic.bootcamp.grupo02final.model.Flujo;
-import es.cic.bootcamp.grupo02final.model.Instancia;
+
+
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-class InstanciaControllerIntegrationTest {
+class ConectorControllerIntegrationTest {
 
 	@PersistenceContext
 	private EntityManager entityManager;	
@@ -46,13 +42,12 @@ class InstanciaControllerIntegrationTest {
 
 	@Test
 	void testCreate() throws Exception {
-		mapper.configure(MapperFeature.USE_GETTERS_AS_SETTERS, false);
-		Instancia instancia = generarInstancia();
+		Conector conector = generarConector();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(instancia));
+				.content(this.mapper.writeValueAsString(conector));
 
 		MvcResult result = this.mvc
 				.perform(mockRequest)
@@ -65,61 +60,28 @@ class InstanciaControllerIntegrationTest {
 		String contenido = result.getResponse().getContentAsString();
 		long idResultado = Long.parseLong(contenido);
 
-		instancia.setId(idResultado);
+		conector.setId(idResultado);
 
-		Instancia instanciaEnBBDD = entityManager.find(Instancia.class, idResultado);
+		Conector conectorEnBBDD = entityManager.find(Conector.class, idResultado);
 
-		assertThat(instanciaEnBBDD)
+		assertThat(conectorEnBBDD)
 		.usingRecursiveComparison()
-		.isEqualTo(instancia);
+		.isEqualTo(conector);
 	}
 	
-	@Test
-	void testTamañoNombreNoPermitido_create() throws Exception {
-		Instancia instancia = generarInstancia();
-		instancia.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia/detalle")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(instancia));
-
-		mvc.perform(mockRequest)
-			.andDo(print())
-			.andExpect(status().isBadRequest());
-
-		
-	}
-	
-	@Test
-	void testNombreVacio_create() throws Exception {
-		Instancia instancia = generarInstancia();
-		instancia.setNombre("");
-
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia/detalle")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(instancia));
-
-		mvc.perform(mockRequest)
-			.andDo(print())
-			.andExpect(status().isBadRequest());
-
-		
-	}
 	
 
 
 	@Test
 	void testRegsitroNoExisteException_create() throws Exception {
 
-		Instancia instancia = generarInstancia();
-		instancia.setId(1L);
+		Conector conector = generarConector();
+		conector.setId(1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(instancia));
+				.content(mapper.writeValueAsString(conector));
 
 		this.mvc
 		.perform(mockRequest)
@@ -131,35 +93,35 @@ class InstanciaControllerIntegrationTest {
 
 	@Test
 	void testFindById() throws Exception {
-
-		Instancia instancia = generarInstancia();
-
-		entityManager.persist(instancia);
+		Conector conector = generarConector();
+		entityManager.persist(conector);
 		entityManager.flush();
-
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancia/detalle/{id}", instancia.getId())
+			
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conexiones/detalle/{id}", conector.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);		
 
 		this.mvc
-			.perform(mockRequest)
-			.andDo(
+		.perform(mockRequest)
+		.andDo(
 				print())
-			.andExpect(status().isOk())
-			.andExpect(
-					jsonPath("$",notNullValue()))
-			.andExpect(
-					jsonPath("$.id", is(instancia.getId().intValue())))
-			.andExpect(
-					jsonPath("$.flujos", hasSize(1)))
-			.andExpect(
-					jsonPath("$.nombre", is(instancia.getNombre())));
+		.andExpect(status().isOk())
+		.andExpect(
+				jsonPath("$",notNullValue()))
+		.andExpect(
+				jsonPath("$.id", is(conector.getId().intValue())))
+		.andExpect(
+				jsonPath("$.lenguaje", is(conector.getLenguaje())))
+		.andExpect(
+				jsonPath("$.tipoServicio", is(conector.getTipoServicio())))
+		.andExpect(
+				jsonPath("$.nombre", is(conector.getNombre())));
 	}
 
 	@Test
 	void testIdNoValidoException_findById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancia/detalle/{id}", -1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conexiones/detalle/{id}", -1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -174,7 +136,7 @@ class InstanciaControllerIntegrationTest {
 	@Test
 	void testRegistroNoExiste_findById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancia/detalle/{id}", 1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/conexiones/detalle/{id}", 1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -188,16 +150,16 @@ class InstanciaControllerIntegrationTest {
 
 	@Test
 	void testFindAll() throws Exception {
-
-		Instancia instancia1 = generarInstancia();
-		entityManager.persist(instancia1);
+		Conector conector1 = generarConector();
+		entityManager.persist(conector1);
 		entityManager.flush();
-		Instancia instancia2 = generarInstancia();
-		entityManager.persist(instancia2);
+		
+		Conector conector2 = generarConector();
+		entityManager.persist(conector2);
 		entityManager.flush();
 
 		MockHttpServletRequestBuilder request =
-				get("/instancia/lista")
+				MockMvcRequestBuilders.post("/conexiones/lista")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON);
 
@@ -211,20 +173,21 @@ class InstanciaControllerIntegrationTest {
 
 	@Test
 	void testUpdate() throws Exception {
-
-		Instancia instancia = generarInstancia();
-		entityManager.persist(instancia);
+		
+		Conector conector = generarConector();
+		entityManager.persist(conector);
 		entityManager.flush();
-		entityManager.detach(instancia);
 
-		Instancia instanciaModificado = generarInstancia();
-		instanciaModificado.setId(instancia.getId());
-		instanciaModificado.setNombre("Instancia 2");
+		Conector conectorModificado = generarConector();
+		conectorModificado.setId(conector.getId());
+		conectorModificado.setLenguaje("HTML");
+		conectorModificado.setNombre("Conector 2");
+		conectorModificado.setTipoServicio("Servicio 2");
 
-		MockHttpServletRequestBuilder request = put("/instancia/detalle")
+		MockHttpServletRequestBuilder request = put("/conexiones/detalle")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(instanciaModificado));
+				.content(mapper.writeValueAsString(conectorModificado));
 
 		mvc.perform(request)
 		.andDo(print())
@@ -232,23 +195,25 @@ class InstanciaControllerIntegrationTest {
 
 
 
-		Instancia instanciaEnBBDD = entityManager.find(Instancia.class, instancia.getId());
+		Conector conectorEnBBDD = entityManager.find(Conector.class, conector.getId());
 
 
-		assertThat(instanciaEnBBDD)
+		assertThat(conectorEnBBDD)
 		.usingRecursiveComparison()
-		.isEqualTo(instanciaModificado);
+		.isEqualTo(conectorModificado);
 	}
 	
+	
+	
 	@Test
-	void testTamañoNombreNoPermitido_update() throws Exception {
-		Instancia instancia = generarInstancia();
-		instancia.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+	void testNombreVacio_update() throws Exception {
+		Conector conector = generarConector();
+		conector.setNombre("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(instancia));
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -258,14 +223,31 @@ class InstanciaControllerIntegrationTest {
 	}
 	
 	@Test
-	void testNombreVacio_update() throws Exception {
-		Instancia instancia = generarInstancia();
-		instancia.setNombre("");
+	void testLenguajeVacio_update() throws Exception {
+		Conector conector = generarConector();
+		conector.setLenguaje("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(instancia));
+				.content(this.mapper.writeValueAsString(conector));
+
+		mvc.perform(mockRequest)
+			.andDo(print())
+			.andExpect(status().isBadRequest());
+
+		
+	}
+	
+	@Test
+	void testTipoServicioVacio_update() throws Exception {
+		Conector conector = generarConector();
+		conector.setTipoServicio("");
+
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(this.mapper.writeValueAsString(conector));
 
 		mvc.perform(mockRequest)
 			.andDo(print())
@@ -277,13 +259,13 @@ class InstanciaControllerIntegrationTest {
 	@Test
 	void testRegistroNoExisteException_update() throws Exception {
 
-		Instancia instancia = generarInstancia();
-		instancia.setId(1L);
+		Conector conector = generarConector();
+		conector.setId(1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(instancia));
+				.content(this.mapper.writeValueAsString(conector));
 
 		this.mvc
 		.perform(mockRequest)
@@ -295,12 +277,12 @@ class InstanciaControllerIntegrationTest {
 	@Test
 	void testRegistroNoExisteException_update_idNull() throws Exception {
 
-		Instancia instancia = generarInstancia();
+		Conector conector = generarConector();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(instancia));
+				.content(this.mapper.writeValueAsString(conector));
 
 		this.mvc
 		.perform(mockRequest)
@@ -312,13 +294,13 @@ class InstanciaControllerIntegrationTest {
 	@Test
 	void testIdNoValidoException_update() throws Exception {
 
-		Instancia instancia = generarInstancia();
-		instancia.setId(-1L);
+		Conector conector = generarConector();
+		conector.setId(-1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/conexiones/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				.content(this.mapper.writeValueAsString(instancia));
+				.content(this.mapper.writeValueAsString(conector));
 
 		this.mvc
 		.perform(mockRequest)
@@ -329,13 +311,12 @@ class InstanciaControllerIntegrationTest {
 
 	@Test
 	void testDeleteById() throws Exception {
-
-		Instancia instancia = generarInstancia();
-		entityManager.persist(instancia);
+		
+		Conector conector = generarConector();
+		entityManager.persist(conector);
 		entityManager.flush();
 
-
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/detalle/{id}", instancia.getId())
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conexiones/detalle/{id}", conector.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -345,14 +326,14 @@ class InstanciaControllerIntegrationTest {
 				print())
 		.andExpect(status().isOk());
 
-		Instancia instanciaEnBBDD = entityManager.find(Instancia.class, instancia.getId());
-		assertNull(instanciaEnBBDD, "No borra el registro"); 
+		Conector conectorEnBBDD = entityManager.find(Conector.class, conector.getId());
+		assertNull(conectorEnBBDD, "No borra el registro"); 
 	}
 
 	@Test
 	void testIdNoValidoException_deleteById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/detalle/{id}", -1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conexiones/detalle/{id}", -1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -367,7 +348,7 @@ class InstanciaControllerIntegrationTest {
 	@Test
 	void testRegistroNoEncontrado_deleteById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/detalle/{id}", 1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/conexiones/detalle/{id}", 1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -379,14 +360,15 @@ class InstanciaControllerIntegrationTest {
 
 	}
 	
-	private Instancia generarInstancia() {
-		Instancia instancia = new Instancia();
-		instancia.setNombre("Instancia 1");
+	private Conector generarConector() {
+		Conector conector = new Conector();
+		conector.setLenguaje("Java");
+		conector.setNombre("Conector 1");
+		conector.setTipoServicio("Servicio 1");
 		
-		
-		return instancia;
+		return conector;
 
 	}
-	
+
 
 }

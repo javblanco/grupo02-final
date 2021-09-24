@@ -32,16 +32,6 @@ public class ConectorController {
 		this.conectorService = conectorService;
 	}
 	
-	@PostMapping("/crearListaInicial")
-    public ResponseEntity<HttpStatus> crearListaInicial() {
-        if (conectorService.findAll().isEmpty()) {
-            Conector conector1 = new Conector("BBDD", "SQL", "Base de datos");
-            Conector conector2 = new Conector("JavaContection", "Java", "Contector de java");
-            Conector conector3 = new Conector(".NET", "C#", "Microsoft .NET");
-            
-        }
-        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-    }
 	@PostMapping(path = "/lista")
 	public ResponseEntity <List<Conector>> findAll(){
 		List<Conector> conector = conectorService.findAll();

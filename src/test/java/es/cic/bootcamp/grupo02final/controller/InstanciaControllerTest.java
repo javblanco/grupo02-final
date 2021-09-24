@@ -5,8 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,22 +49,24 @@ class InstanciaControllerTest {
 		
 	}
 	
-	@Test
-	void testFindAll() {
-		Instancia instancia1 = new Instancia();
-		Instancia instancia2 = new Instancia();
-		List<Instancia> instancias = new ArrayList<>();
-		instancias.add(instancia1);
-		instancias.add(instancia2);
-		
-		when(dependencia.findAll()).thenReturn(instancias);
-		
-		List<Instancia> instanciasRecogidos = cut.findAll();
-		
-		assertEquals(instanciasRecogidos, instancias);
-		verify(dependencia, times(1)).findAll();
-		
-	}
+
+//	@Test
+//	void testFindAll() {
+//		Instancia instancia1 = new Instancia();
+//		Instancia instancia2 = new Instancia();
+//		List<Instancia> instancias = new ArrayList<>();
+//		instancias.add(instancia1);
+//		instancias.add(instancia2);
+//		
+//		when(dependencia.findAll()).thenReturn(instancias);
+//		
+//		List<Instancia> instanciasRecogidos = cut.findAll();
+//		
+//		assertEquals(instanciasRecogidos, instancias);
+//		verify(dependencia, times(1)).findAll();
+//		
+//	}
+
 	
 	@Test
 	void testUpdate() {

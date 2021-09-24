@@ -2,9 +2,10 @@ package es.cic.bootcamp.grupo02final.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import es.cic.bootcamp.grupo02final.model.Instancia;
 import es.cic.bootcamp.grupo02final.service.InstanciaService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/instancia")
+@RequestMapping(value = "/instancias")
 public class InstanciaController {
 
 	@Autowired
@@ -28,11 +31,10 @@ public class InstanciaController {
 		this.instanciaService = instanciaService;
 	}
 	
-	
-	@GetMapping("/lista")
-	@ResponseBody
-	public List<Instancia> findAll(){
-		return instanciaService.findAll();
+	@PostMapping(path = "/lista")
+	public ResponseEntity <List<Instancia>> findAll(){
+		List<Instancia> instancia = instanciaService.findAll();
+		return new ResponseEntity<List<Instancia>>(instancia, HttpStatus.OK);
 	}
 
 	@GetMapping("/detalle/{id}")
@@ -41,14 +43,14 @@ public class InstanciaController {
 		return instanciaService.findById(id);
 	}
 
-	@PostMapping("detalle")
-	public Long create(@Valid @RequestBody Instancia instancia) {
+	@PostMapping("/detalle")
+	public Long create(@RequestBody Instancia instancia) {
 		return instanciaService.create(instancia);
 	}
 	
-	@PutMapping("detalle")
+	@PutMapping("/detalle")
 	@ResponseBody
-	public Instancia update(@Valid @RequestBody Instancia instancia) {
+	public Instancia update(@RequestBody Instancia instancia) {
 		return instanciaService.update(instancia);
 	}
 	

@@ -1,59 +1,39 @@
-
 <div class="container">
-    <div class="row">
-      <div class="col">
-       Id
-      </div>
-      <div class="col">
-       Nombre
-      </div>
-      <div class="col">
-       Flujo
-       </div>
-       <div class="col">
-        Fecha Inicio
-        </div>
-        <div class="col">
-           Fecha Fin
-            </div>
-            <div class="col">
-               Estado
-                </div>
-  
-      
-     
-    </div>
-    <div class="row">
-        <div class="col">
-        1
-        </div>
-        <div class="col">
-       Local
-        </div>
-        <div class="col">
-       42
-         </div>
-         <div class="col">
-            21:20
-              </div>
-              <div class="col">
-                22:34
-                  </div>
-    
-     
-        <div class="col">
-      True
-        </div>
-        
-       
-      </div>
-
-    <div class="row">
-        <div class="col-sm">
-          <a routerLink="/"> <button type="button" class="btn btn-primary btn-lg w-100">Volver</button></a>
-        </div>
-        <div class="col-sm">
-          <a routerLink="/flujo-add"><button type="button" class="btn btn-warning btn-lg w-100">Crear Flujo</button></a>
-        </div>
-      </div>
+  <div class="row">
+    <h2>Lista de Flujos</h2>
+    <table id="customers">
+      <tr>
+        <td>Id</td>
+        <td>Nombre</td>
+        <td>Fecha Inicio</td>
+        <td>Fecha Fin</td>
+        <td>Estado</td>
+        <td>Instancia</td>
+        <td><!-- Acciones --></td>
+      </tr>
+      <tr *ngFor="let flujo of flujos">
+        <td>{{flujo.id}}</td>
+        <td>{{flujo.nombre}}</td>
+        <td>{{flujo.tiempoInicio | date:'dd/MM/yyyy'}}</td>
+        <td>{{flujo.tiempoFin | date:'dd/MM/yyyy'}}</td>
+        <td>{{flujo.estado}}</td>
+        <td>{{flujo.instancia ? ('[' + flujo.instancia.id + '] ' + flujo.instancia.nombre) : '' }}</td>
+        <td>
+          <a routerLink="/flujos/detalle/{{flujo.id}}"><button type="button" class="btn btn-sm btn-warning">Editar</button></a>
+          <button *ngIf="flujo.estado" type="button" class="btn btn-sm btn-danger" (click)="deleteFlujo(flujo)">Eliminar</button>
+        </td>
+      </tr>
+    </table>
   </div>
+  <div class="row"><br/></div>
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+      <a routerLink="/"> <button type="button" class="btn btn-sm btn-primary">Volver</button></a>
+    </div>
+    <div class="col-lg-3">
+      <a routerLink="/flujos/alta"><button type="button" class="btn btn-sm btn-warning">Crear Flujo</button></a>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+</div>

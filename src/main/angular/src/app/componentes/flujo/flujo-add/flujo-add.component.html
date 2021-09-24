@@ -1,55 +1,54 @@
-<form>
-  
-  
-    <!-- Id input -->
-    <div class="form-outline mb-4">
-      <input type="text" id="form6Example3" class="form-control" />
-      <label class="form-label" for="form6Example3">ID</label>
+<div class="container">
+  <form #detailForm="ngForm" (submit)="save()">
+    <div>
+      <h2>{{(flujo.id != null) ? 'Editar' : 'Crear'}} flujo</h2>
     </div>
-  
-    <!-- Nombre input -->
-    <div class="form-outline mb-4">
-      <input type="text" id="form6Example4" class="form-control" />
-      <label class="form-label" for="form6Example4">NOMBRE</label>
+    <div class="row">
+      <div class="col-lg-1">
+        <label class="form-label" for="idFlujo">Id</label>
+        <input type="text" id="idFlujo" class="form-control"
+            name="id" [(ngModel)]="flujo.id"
+            disabled/>
+      </div>
+      <div class="col-lg-2">
+        <label class="form-label" for="nombre">Nombre</label>
+        <input type="text" id="nombre" class="form-control"
+                name="nombre" [(ngModel)]="flujo.nombre"
+                maxlength="15"
+                required />
+      </div>
+      <div class="col-lg-2">
+        <label class="form-label" for="tiempoInicio">Fecha Inicio</label>
+        <input type="datetime" id="tiempoInicio" class="form-control" 
+            name="tiempoInicio" [(ngModel)]="flujo.tiempoInicio" />
+      </div>
+      <div class="col-lg-2">
+        <label class="form-label" for="tiempoFin">Fecha Fin</label>
+        <input type="datetime" id="tiempoFin" class="form-control" 
+            name="tiempoFin" [(ngModel)]="flujo.tiempoFin" />
+      </div>
+      <div class="col-lg-2">
+        <label class="form-label" for="estado">¿Activo?</label>
+        <input type="checkbox" id="estado" name="estado" [(ngModel)]="flujo.estado" [value]="true">   
+      </div>
+      <div class="col-lg-3">
+        <label class="form-label" for="instancia">Instancia</label>
+        <select class="form-control" id="instancia" name="instancia" [(ngModel)]="flujo.instancia" placeholder="Elige una opción" >
+          <option *ngFor="let option of instanciasCombo" [ngValue]="option">{{'[' + option.id + '] ' + option.nombre}}</option>
+        </select>
+      </div>
     </div>
-  
-    <!-- Flujo input -->
-    <div class="form-outline mb-4">
-      <input type="email" id="form6Example5" class="form-control" />
-      <label class="form-label" for="form6Example5">INSTANCIA</label>
+    <div class="row"><br/></div>
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-3">
+        <button type="button" class="btn btn-sm btn-primary" (click)="goBack()">Volver</button>
+      </div>
+      <div class="col-lg-3">
+        <button type="submit" class="btn btn-sm btn-warning"
+                [disabled]="!detailForm.form.valid">{{(flujo.id != null) ? 'Editar' : 'Crear'}} flujos</button>
+      </div>
+      <div class="col-lg-3"></div>
     </div>
-    <form>
-  
-  
-        <!-- Id input -->
-        <div class="form-outline mb-4">
-          <input type="text" id="form6Example3" class="form-control" />
-          <label class="form-label" for="form6Example3">ESTADO</label>
-        </div>
-      
-        <!-- Nombre input -->
-        <div class="form-outline mb-4">
-          <input type="text" id="form6Example4" class="form-control" />
-          <label class="form-label" for="form6Example4">FECHA INICIO</label>
-        </div>
-      
-        <!-- Flujo input -->
-        <div class="form-outline mb-4">
-          <input type="email" id="form6Example5" class="form-control" />
-          <label class="form-label" for="form6Example5">FECHA FIN</label>
-        </div>
-      
-      
-        
-  
-        <div class="row">
-            <div class="col-sm">
-                <a routerLink="/"> <button type="button" class="btn btn-primary btn-lg w-100">Volver</button></a>
-            </div>
-            <div class="col-sm">
-                <button type="submit" class="btn btn-warning btn-lg w-100">Crear Flujo</button>
-            </div>
-          </div>
-   
- 
   </form>
+</div>
