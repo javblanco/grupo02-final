@@ -1,10 +1,8 @@
 export class Instancia {
 
-    id: number | undefined;
-    nombre: string | undefined;
-    flujo: string | undefined;
-   
+  id: number | undefined;
+  nombre: string | undefined;
+
+  constructor() {}
   
-    constructor() {}
-    
-  }
+}

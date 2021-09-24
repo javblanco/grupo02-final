@@ -1,31 +1,35 @@
-<form>
-  
-  
-    <!-- Id input -->
-    <div class="form-outline mb-4">
-      <input type="text" id="form6Example3" class="form-control" />
-      <label class="form-label" for="form6Example3">ID</label>
+<div class="container">
+  <form #detailForm="ngForm" (submit)="save()">
+    <div>
+      <h2>{{(instancia.id != null) ? 'Editar' : 'Crear'}} instancia</h2>
     </div>
-  
-    <!-- Nombre input -->
-    <div class="form-outline mb-4">
-      <input type="text" id="form6Example4" class="form-control" />
-      <label class="form-label" for="form6Example4">NOMBRE</label>
-    </div>
-  
-    <!-- Flujo input -->
-    <div class="form-outline mb-4">
-      <input type="email" id="form6Example5" class="form-control" />
-      <label class="form-label" for="form6Example5">Flujo</label>
-    </div>
-  
-  
     <div class="row">
-        <div class="col-sm">
-            <a routerLink="/"> <button type="button" class="btn btn-primary btn-lg w-100">Volver</button></a>
-        </div>
-        <div class="col-sm">
-            <button type="submit" class="btn btn-warning btn-lg w-100">Crear Instancia</button>
-        </div>
+      <div class="col-lg-1">
+        <label class="form-label" for="idInstancia">Id</label>
+        <input type="text" id="idInstancia" class="form-control"
+                name="id" [(ngModel)]="instancia.id"
+                disabled/>
       </div>
+
+      <div class="col-lg-5">
+        <label class="form-label" for="nombreInstancia">Nombre</label>
+        <input type="text" id="nombreInstancia" class="form-control"
+              name="nombre" [(ngModel)]="instancia.nombre"
+              maxlength="15"
+              required />
+      </div>
+    </div>
+    <div class="row"><br/></div>
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-3">
+        <button type="button" class="btn btn-sm btn-primary" (click)="goBack()">Volver</button>
+      </div>
+      <div class="col-lg-3">
+        <button type="submit" class="btn btn-sm btn-warning"
+                [disabled]="!detailForm.form.valid">{{(instancia.id != null) ? 'Editar' : 'Crear'}} instancia</button>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
   </form>
+</div>

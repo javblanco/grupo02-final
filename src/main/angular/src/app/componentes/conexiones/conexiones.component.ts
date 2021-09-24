@@ -16,14 +16,9 @@ export class ConexionesComponent implements OnInit {
   ) { }
 
 
-   ngOnInit(): void {
-    if (this.conexiones.length == 0) {
-      this.conexionService.crearListaInicial().subscribe(
-        () => {
-          this._getConexiones();
-        }
-      );
-    }
+  public ngOnInit(): void {
+    this._getConexiones();
+
   }
 
   _getConexiones(): void {

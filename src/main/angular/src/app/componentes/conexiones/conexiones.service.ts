@@ -10,13 +10,6 @@ export class ConexionService {
     public httpClient: HttpClient
   ) { }
 
-  public crearListaInicial(): Observable<any> {
-    const url = 'http://localhost:8080/conexiones/crearListaInicial';
-    const body = null;
-    const headers = new HttpHeaders({'Content-type': 'application/json'});
-    return this.httpClient.post(url, body, {headers: headers});
-  }
-
   public findConexiones(): Observable<any> {
     const url = 'http://localhost:8080/conexiones/lista';
     const body = null;

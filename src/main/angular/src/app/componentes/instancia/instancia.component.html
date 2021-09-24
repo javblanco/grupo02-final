@@ -1,43 +1,31 @@
-
-
 <div class="container">
-    <div class="row">
-      <div class="col">
-       Id
-      </div>
-      <div class="col">
-       Nombre
-      </div>
-      <div class="col">
-        Flujo
-       </div>
-  
-   
-      
-      
-     
-    </div>
-    <div class="row">
-        <div class="col">
-        1
-        </div>
-        <div class="col">
-        Conexión Maquina 2
-        </div>
-        <div class="col">
-         Flujo022
-         </div>
-    
-        
-       
-      </div>
-
-    <div class="row">
-        <div class="col-sm">
-          <a routerLink="/"> <button type="button" class="btn btn-primary btn-lg w-100">Volver</button></a>
-        </div>
-        <div class="col-sm">
-          <a routerLink="/instancia-add"><button type="button" class="btn btn-warning btn-lg w-100">Crear Instancia</button></a>
-        </div>
-      </div>
+  <div class="row">
+    <h2>Lista de Instancias</h2>
+    <table id="customers">
+      <tr>
+        <td>Id</td>
+        <td>Nombre</td>
+        <td><!-- Acciones --></td>
+      </tr>
+      <tr *ngFor="let instancia of instancia">
+        <td>{{instancia.id}}</td>
+        <td>{{instancia.nombre}}</td>
+        <td>
+          <a routerLink="/instancias/detalle/{{instancia.id}}"><button type="button" class="btn btn-sm btn-warning">Editar</button></a>
+          <button type="button" class="btn btn-sm btn-danger" (click)="deleteInstancia(instancia)">Eliminar</button>
+        </td>
+      </tr>
+    </table>
   </div>
+  <div class="row"><br/></div>
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+      <a routerLink="/"> <button type="button" class="btn btn-sm btn-primary">Volver</button></a>
+    </div>
+    <div class="col-lg-3">
+      <a routerLink="/instancias/alta"><button type="button" class="btn btn-sm btn-warning">Crear Instancia</button></a>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+</div>
