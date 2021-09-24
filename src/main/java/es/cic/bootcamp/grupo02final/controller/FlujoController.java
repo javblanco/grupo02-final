@@ -2,6 +2,8 @@ package es.cic.bootcamp.grupo02final.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +47,13 @@ public class FlujoController {
 	}
 
 	@PostMapping("/detalle")
-	public Long create(@RequestBody Flujo flujo) {
+	public Long create(@Valid @RequestBody Flujo flujo) {
 		return flujoService.create(flujo);
 	}
 	
 	@PutMapping("/detalle")
 	@ResponseBody
-	public Flujo update(@RequestBody Flujo flujo) {
+	public Flujo update(@Valid @RequestBody Flujo flujo) {
 		return flujoService.update(flujo);
 	}
 	

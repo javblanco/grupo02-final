@@ -2,6 +2,8 @@ package es.cic.bootcamp.grupo02final.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,13 +46,13 @@ public class InstanciaController {
 	}
 
 	@PostMapping("/detalle")
-	public Long create(@RequestBody Instancia instancia) {
+	public Long create(@Valid @RequestBody Instancia instancia) {
 		return instanciaService.create(instancia);
 	}
 	
 	@PutMapping("/detalle")
 	@ResponseBody
-	public Instancia update(@RequestBody Instancia instancia) {
+	public Instancia update(@Valid @RequestBody Instancia instancia) {
 		return instanciaService.update(instancia);
 	}
 	
