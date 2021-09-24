@@ -34,7 +34,7 @@ class InstanciaControllerTest {
 		
 		Long id = cut.create(instancia);
 		
-		assertEquals(id, 1L);
+		assertEquals(1L, id);
 		verify(dependencia, times(1)).create(instancia);
 		
 	}

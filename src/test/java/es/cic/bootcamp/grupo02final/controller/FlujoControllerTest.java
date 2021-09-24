@@ -34,7 +34,7 @@ class FlujoControllerTest {
 		
 		Long id = cut.create(flujo);
 		
-		assertEquals(id, 1L);
+		assertEquals(1L, id);
 		verify(dependencia, times(1)).create(flujo);
 		
 	}

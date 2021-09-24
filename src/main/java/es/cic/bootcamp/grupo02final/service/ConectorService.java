@@ -14,6 +14,10 @@ import es.cic.bootcamp.grupo02final.repository.ConectorRepository;
 @Service
 public class ConectorService {
 	
+	private static final String ID_NO_VALIDO = "El id introducido no es válido";
+	
+	private static final String REGISTRO_NO_EXISTE = "El registro introducido no existe";
+	
 	@Autowired
 	private ConectorRepository conectorRepository;
 	
@@ -29,14 +33,14 @@ public class ConectorService {
 	public Conector findById(Long id) {
 		
 		if(id <= 0) {
-			throw new IdNoValidoException("El id introducido no es válido");
+			throw new IdNoValidoException(ID_NO_VALIDO);
 		}
 		
 		Optional<Conector> optional = conectorRepository.findById(id);
 		if(optional.isPresent()) {
 			return optional.get();
 		}else {
-			throw new RegistroNoExisteException("El registro con el id introducido no existe");
+			throw new RegistroNoExisteException(REGISTRO_NO_EXISTE);
 		}
 	}
 	
@@ -52,18 +56,17 @@ public class ConectorService {
 	public Conector update(Conector conector) {
 		
 		if(conector.getId() == null) {
-			throw new RegistroNoExisteException("El registro introducido no existe");
+			throw new RegistroNoExisteException(REGISTRO_NO_EXISTE);
+		}
+		
+		if(conector.getId() <= 0) {
+			throw new IdNoValidoException(ID_NO_VALIDO);
 		}
 		
 		Optional<Conector> optional = conectorRepository.findById(conector.getId());
 		if(optional.isEmpty()) {
-			throw new RegistroNoExisteException("El registro introducido no existe");
-		}
-		
-		if(conector.getId() <= 0) {
-			throw new IdNoValidoException("El id introducido no es válido");
-		}
-		
+			throw new RegistroNoExisteException(REGISTRO_NO_EXISTE);
+		}		
 		
 		return conectorRepository.save(conector);
 		
@@ -72,14 +75,14 @@ public class ConectorService {
 	public void deleteById(Long id) {
 		
 		if(id <= 0) {
-			throw new IdNoValidoException("El id introducido no es válido");
+			throw new IdNoValidoException(ID_NO_VALIDO);
 		}
 		
 		Optional<Conector> optional = conectorRepository.findById(id);
 		if(optional.isPresent()) {
 			conectorRepository.deleteById(id);
 		}else {
-			throw new RegistroNoExisteException("El registro con el id introducido no existe");
+			throw new RegistroNoExisteException(REGISTRO_NO_EXISTE);
 		}
 		
 	}
