@@ -13,7 +13,7 @@ import es.cic.bootcamp.grupo02final.repository.InstanciaRepository;
 
 @Service
 public class InstanciaService {
-
+	
 	@Autowired
 	private InstanciaRepository instanciaRepository;
 	
@@ -60,7 +60,7 @@ public class InstanciaService {
 			throw new RegistroNoExisteException("El registro introducido no existe");
 		}
 		
-		if(instancia.getId() == null || instancia.getId() <= 0) {
+		if(instancia.getId() <= 0) {
 			throw new IdNoValidoException("El id introducido no es válido");
 		}
 		
@@ -83,4 +83,5 @@ public class InstanciaService {
 		}
 		
 	}
+
 }

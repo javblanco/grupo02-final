@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { ConexionAddComponent } from './conexiones/conexion-add/conexion-add.component';
 import { ConexionesComponent } from './conexiones/conexiones.component';
 import { FlujoAddComponent } from './flujo/flujo-add/flujo-add.component';
-import { FlujoComponent } from './flujo/flujo.component';
+import { FlujosComponent } from './flujo/flujo.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { InstanciaAddComponent } from './instancia/instancia-add/instancia-add.component';
@@ -24,11 +24,9 @@ import { InstanciaComponent } from './instancia/instancia.component';
     ConexionAddComponent,
     InstanciaComponent,
     InstanciaAddComponent,
-    FlujoComponent,
+    FlujosComponent,
     FlujoAddComponent,
-    FooterComponent,
- 
-    
+    FooterComponent
   ],
   imports: [
     BrowserModule,

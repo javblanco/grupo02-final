@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Instancia } from 'src/app/clases/instancia';
+import { InstanciaService } from './instancia.service';
 
 @Component({
   selector: 'app-instancia',
@@ -7,9 +9,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstanciaComponent implements OnInit {
 
-  constructor() { }
+  public instancia: Instancia[] = [];
 
-  ngOnInit(): void {
+  constructor(
+    private instanciaService: InstanciaService
+  ) { }
+
+  public ngOnInit(): void {
+    this._getInstancias();
+  }
+
+  _getInstancias(): void {
+    this.instanciaService.findInstancias().subscribe(
+      (instancias: Instancia[]) => {
+        this.instancia = instancias
+      }
+    );
+  }
+
+  public deleteInstancia(instancia: Instancia): void {
+    if(confirm("¿Está seguro de borrar la instancia " + instancia.id + "?")) {
+      this.instanciaService.deleteInstancia(instancia).subscribe(
+        () => {
+          this._getInstancias();
+        }
+      );
+    }
   }
 
 }

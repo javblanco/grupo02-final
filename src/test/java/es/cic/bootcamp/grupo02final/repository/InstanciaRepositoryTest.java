@@ -2,14 +2,12 @@ package es.cic.bootcamp.grupo02final.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.model.Instancia;
 
 @DataJpaTest
@@ -106,27 +104,7 @@ class InstanciaRepositoryTest {
 		Instancia instancia = new Instancia();
 		instancia.setNombre("Instancia 1");
 		
-		List<Flujo> flujos = new ArrayList<>();
-		Flujo flujo = generarFlujo();
-		flujos.add(flujo);
-		instancia.setFlujos(flujos);
-		
 		return instancia;
-		
-	}
-	
-	private Flujo generarFlujo() {
-		
-		Flujo flujo = new Flujo();
-		flujo.setNombre("Flujo 1");
-		flujo.setEstado(true);
-		flujo.setTiempoInicio(LocalDate.now());
-		flujo.setTiempoFin(LocalDate.of(2021, 10, 3));
-		
-		entityManager.persist(flujo);
-		entityManager.flush();
-		
-		return flujo;
 		
 	}
 

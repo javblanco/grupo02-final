@@ -5,14 +5,10 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -27,7 +23,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.model.Instancia;
 
 @SpringBootTest
@@ -49,7 +44,7 @@ class InstanciaControllerIntegrationTest {
 		mapper.configure(MapperFeature.USE_GETTERS_AS_SETTERS, false);
 		Instancia instancia = generarInstancia();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancias/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -79,7 +74,7 @@ class InstanciaControllerIntegrationTest {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancias/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -96,7 +91,7 @@ class InstanciaControllerIntegrationTest {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancias/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -116,7 +111,7 @@ class InstanciaControllerIntegrationTest {
 		Instancia instancia = generarInstancia();
 		instancia.setId(1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/instancias/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(instancia));
@@ -137,7 +132,7 @@ class InstanciaControllerIntegrationTest {
 		entityManager.persist(instancia);
 		entityManager.flush();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancia/detalle/{id}", instancia.getId())
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancias/detalle/{id}", instancia.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);		
 
@@ -151,15 +146,13 @@ class InstanciaControllerIntegrationTest {
 			.andExpect(
 					jsonPath("$.id", is(instancia.getId().intValue())))
 			.andExpect(
-					jsonPath("$.flujos", hasSize(1)))
-			.andExpect(
 					jsonPath("$.nombre", is(instancia.getNombre())));
 	}
 
 	@Test
 	void testIdNoValidoException_findById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancia/detalle/{id}", -1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancias/detalle/{id}", -1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -174,7 +167,7 @@ class InstanciaControllerIntegrationTest {
 	@Test
 	void testRegistroNoExiste_findById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancia/detalle/{id}", 1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/instancias/detalle/{id}", 1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -196,8 +189,7 @@ class InstanciaControllerIntegrationTest {
 		entityManager.persist(instancia2);
 		entityManager.flush();
 
-		MockHttpServletRequestBuilder request =
-				get("/instancia/lista")
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/instancias/lista")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON);
 
@@ -221,7 +213,7 @@ class InstanciaControllerIntegrationTest {
 		instanciaModificado.setId(instancia.getId());
 		instanciaModificado.setNombre("Instancia 2");
 
-		MockHttpServletRequestBuilder request = put("/instancia/detalle")
+		MockHttpServletRequestBuilder request = put("/instancias/detalle")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(instanciaModificado));
@@ -245,7 +237,7 @@ class InstanciaControllerIntegrationTest {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancias/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -262,7 +254,7 @@ class InstanciaControllerIntegrationTest {
 		Instancia instancia = generarInstancia();
 		instancia.setNombre("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancias/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -280,7 +272,7 @@ class InstanciaControllerIntegrationTest {
 		Instancia instancia = generarInstancia();
 		instancia.setId(1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancias/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -297,7 +289,7 @@ class InstanciaControllerIntegrationTest {
 
 		Instancia instancia = generarInstancia();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancias/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -315,7 +307,7 @@ class InstanciaControllerIntegrationTest {
 		Instancia instancia = generarInstancia();
 		instancia.setId(-1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancia/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/instancias/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(instancia));
@@ -335,7 +327,7 @@ class InstanciaControllerIntegrationTest {
 		entityManager.flush();
 
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/detalle/{id}", instancia.getId())
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancias/detalle/{id}", instancia.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -352,7 +344,7 @@ class InstanciaControllerIntegrationTest {
 	@Test
 	void testIdNoValidoException_deleteById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/detalle/{id}", -1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancias/detalle/{id}", -1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -367,7 +359,7 @@ class InstanciaControllerIntegrationTest {
 	@Test
 	void testRegistroNoEncontrado_deleteById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancia/detalle/{id}", 1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/instancias/detalle/{id}", 1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -383,26 +375,10 @@ class InstanciaControllerIntegrationTest {
 		Instancia instancia = new Instancia();
 		instancia.setNombre("Instancia 1");
 		
-		List<Flujo> flujos = new ArrayList<>();
-		Flujo flujo = generarFlujo();
-		flujos.add(flujo);
-		
-		instancia.setFlujos(flujos);
 		
 		return instancia;
 
 	}
 	
-	private Flujo generarFlujo() {
-		Flujo flujo = new Flujo();
-		flujo.setEstado(true);
-		flujo.setNombre("Flujo 1");
-		flujo.setTiempoInicio(LocalDate.now());
-		flujo.setTiempoFin(LocalDate.of(2021, 9, 30));
-		entityManager.persist(flujo);
-		entityManager.flush();
-		
-		return flujo;
-	}
 
 }

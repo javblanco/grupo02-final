@@ -1,7 +1,6 @@
 package es.cic.bootcamp.grupo02final.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -47,7 +46,7 @@ class FlujoControllerIntegrationTest {
 	void testCreate() throws Exception {
 		Flujo flujo = generarFlujo();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujo/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujos/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -77,7 +76,7 @@ class FlujoControllerIntegrationTest {
 		Flujo flujo = generarFlujo();
 		flujo.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujo/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujos/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -94,7 +93,7 @@ class FlujoControllerIntegrationTest {
 		Flujo flujo = generarFlujo();
 		flujo.setNombre("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujo/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujos/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -112,7 +111,7 @@ class FlujoControllerIntegrationTest {
 		Flujo flujo = generarFlujo();
 		flujo.setId(1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujo/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/flujos/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(flujo));
@@ -131,7 +130,7 @@ class FlujoControllerIntegrationTest {
 		entityManager.persist(flujo);
 		entityManager.flush();
 		
-		MockHttpServletRequestBuilder mockRequest =  MockMvcRequestBuilders.get("/flujo/detalle/{id}", flujo.getId())
+		MockHttpServletRequestBuilder mockRequest =  MockMvcRequestBuilders.get("/flujos/detalle/{id}", flujo.getId())
 	            .contentType(MediaType.APPLICATION_JSON)
 	            .accept(MediaType.APPLICATION_JSON);
 		
@@ -151,7 +150,7 @@ class FlujoControllerIntegrationTest {
 	@Test
 	void testIdNoValidoException_findById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/flujo/detalle/{id}", -1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/flujos/detalle/{id}", -1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -166,7 +165,7 @@ class FlujoControllerIntegrationTest {
 	@Test
 	void testRegistroNoExiste_findById() throws Exception {
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/flujo/detalle/{id}", 1L)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/flujos/detalle/{id}", 1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -187,8 +186,7 @@ class FlujoControllerIntegrationTest {
 		entityManager.persist(flujo2);
 		entityManager.flush();
 		
-		MockHttpServletRequestBuilder request =
-				get("/flujo/lista")
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/flujos/lista")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON);
 
@@ -216,7 +214,7 @@ class FlujoControllerIntegrationTest {
 		flujoModificado.setNombre("Modificado");
 		flujoModificado.setEstado(false);
 		
-		MockHttpServletRequestBuilder requestBuilder = put("/flujo/detalle")
+		MockHttpServletRequestBuilder requestBuilder = put("/flujos/detalle")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(flujoModificado));
@@ -237,7 +235,7 @@ class FlujoControllerIntegrationTest {
 		Flujo flujo = generarFlujo();
 		flujo.setNombre("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujos/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -254,7 +252,7 @@ class FlujoControllerIntegrationTest {
 		Flujo flujo = generarFlujo();
 		flujo.setNombre("");
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujos/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -272,7 +270,7 @@ class FlujoControllerIntegrationTest {
 		Flujo flujo = generarFlujo();
 		flujo.setId(1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujos/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -289,7 +287,7 @@ class FlujoControllerIntegrationTest {
 
 		Flujo flujo = generarFlujo();
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujos/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));
@@ -307,7 +305,7 @@ class FlujoControllerIntegrationTest {
 		Flujo flujo = generarFlujo();
 		flujo.setId(-1L);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujo/detalle")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/flujos/detalle")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(flujo));

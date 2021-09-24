@@ -16,14 +16,9 @@ export class ConexionesComponent implements OnInit {
   ) { }
 
 
-   ngOnInit(): void {
-    if (this.conexiones.length == 0) {
-      this.conexionService.crearListaInicial().subscribe(
-        () => {
-          this._getConexiones();
-        }
-      );
-    }
+  public ngOnInit(): void {
+    this._getConexiones();
+
   }
 
   _getConexiones(): void {
@@ -38,6 +33,16 @@ export class ConexionesComponent implements OnInit {
   public deleteConexion(conexion: Conexion): void {
     if(confirm("¿Está seguro de borrar la conexión " + conexion.id + "?")) {
       this.conexionService.deleteConexion(conexion).subscribe(
+        () => {
+          this._getConexiones();
+        }
+      );
+    }
+  }
+
+  public createConexion(conexion: Conexion): void {
+    if(confirm("¿Está seguro de crear la conexión " + conexion.id + "?")) {
+      this.conexionService.insertConexion(conexion).subscribe(
         () => {
           this._getConexiones();
         }

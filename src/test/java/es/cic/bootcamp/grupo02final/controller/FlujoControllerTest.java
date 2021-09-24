@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.springframework.http.ResponseEntity;
 import es.cic.bootcamp.grupo02final.model.Flujo;
 import es.cic.bootcamp.grupo02final.service.FlujoService;
 
@@ -51,6 +51,7 @@ class FlujoControllerTest {
 		
 	}
 	
+
 	@Test
 	void testFindAll() {
 		Flujo flujo1 = new Flujo();
@@ -61,12 +62,13 @@ class FlujoControllerTest {
 		
 		when(dependencia.findAll()).thenReturn(flujos);
 		
-		List<Flujo> flujosRecogidos = cut.findAll();
+		ResponseEntity <List<Flujo>> flujosRecogidos = cut.findAll();
 		
-		assertEquals(flujosRecogidos, flujos);
+		assertEquals(flujosRecogidos.getBody(), flujos);
 		verify(dependencia, times(1)).findAll();
 		
 	}
+
 	
 	@Test
 	void testUpdate() {

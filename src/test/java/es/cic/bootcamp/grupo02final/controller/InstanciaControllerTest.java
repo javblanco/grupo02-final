@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.springframework.http.ResponseEntity;
 import es.cic.bootcamp.grupo02final.model.Instancia;
 import es.cic.bootcamp.grupo02final.service.InstanciaService;
 
@@ -51,6 +51,7 @@ class InstanciaControllerTest {
 		
 	}
 	
+
 	@Test
 	void testFindAll() {
 		Instancia instancia1 = new Instancia();
@@ -61,12 +62,13 @@ class InstanciaControllerTest {
 		
 		when(dependencia.findAll()).thenReturn(instancias);
 		
-		List<Instancia> instanciasRecogidos = cut.findAll();
+		ResponseEntity <List<Instancia>> instanciasRecogidos = cut.findAll();
 		
-		assertEquals(instanciasRecogidos, instancias);
+		assertEquals(instanciasRecogidos.getBody(), instancias);
 		verify(dependencia, times(1)).findAll();
 		
 	}
+
 	
 	@Test
 	void testUpdate() {
