@@ -33,7 +33,6 @@ public class InicioController {
 		this.conectorService = conectorService;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@PostMapping("/rellenarTablas")
     public ResponseEntity<HttpStatus> crearListaInicial() {
 
@@ -61,11 +60,11 @@ public class InicioController {
 
 		// Rellenamos la tabla de flujo
 		if (flujoService.findAll().isEmpty()) {
-            Flujo flujo1 = new Flujo("A001", LocalDate.of(2020, 12, 12),LocalDate.of(2020, 12, 12), instanciaService.findById(new Long(2)), true);
-            Flujo flujo2 = new Flujo("A002", LocalDate.of(2020, 10, 12), LocalDate.of(2020, 10, 12), instanciaService.findById(new Long(2)), false);
-            Flujo flujo3 = new Flujo("B001", LocalDate.of(2020, 8, 10), LocalDate.of(2020, 12, 12), instanciaService.findById(new Long(2)), false);
-			Flujo flujo4 = new Flujo("B002", LocalDate.of(2020, 8, 10), LocalDate.of(2020, 12, 12), instanciaService.findById(new Long(3)), false);
-			Flujo flujo5 = new Flujo("C001", LocalDate.of(2020, 8, 10), LocalDate.of(2020, 12, 12), instanciaService.findById(new Long(3)), false);
+            Flujo flujo1 = new Flujo("A001", LocalDate.of(2020, 12, 12),LocalDate.of(2020, 12, 12), instanciaService.findById(1L), true);
+            Flujo flujo2 = new Flujo("A002", LocalDate.of(2020, 10, 12), LocalDate.of(2020, 10, 12), instanciaService.findById(1L), false);
+            Flujo flujo3 = new Flujo("B001", LocalDate.of(2020, 8, 10), LocalDate.of(2020, 12, 12), instanciaService.findById(2L), false);
+			Flujo flujo4 = new Flujo("B002", LocalDate.of(2020, 8, 10), LocalDate.of(2020, 12, 12), instanciaService.findById(2L), false);
+			Flujo flujo5 = new Flujo("C001", LocalDate.of(2020, 8, 10), LocalDate.of(2020, 12, 12), instanciaService.findById(3L), false);
             
 	
             flujoService.create(flujo1);

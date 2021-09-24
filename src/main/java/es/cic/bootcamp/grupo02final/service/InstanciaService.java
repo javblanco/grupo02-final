@@ -14,6 +14,10 @@ import es.cic.bootcamp.grupo02final.repository.InstanciaRepository;
 @Service
 public class InstanciaService {
 	
+	private static final String ID_NO_VALIDO = "El id introducido no es válido";
+	
+	private static final String REGISTRO_NO_EXISTE = "El registro introducido no existe";
+	
 	@Autowired
 	private InstanciaRepository instanciaRepository;
 	
@@ -29,14 +33,14 @@ public class InstanciaService {
 	public Instancia findById(Long id) {
 		
 		if(id <= 0) {
-			throw new IdNoValidoException("El id introducido no es válido");
+			throw new IdNoValidoException(ID_NO_VALIDO);
 		}
 		
 		Optional<Instancia> optional = instanciaRepository.findById(id);
 		if(optional.isPresent()) {
 			return optional.get();
 		}else {
-			throw new RegistroNoExisteException("El registro con el id introducido no existe");
+			throw new RegistroNoExisteException(REGISTRO_NO_EXISTE);
 		}
 	}
 	
@@ -52,18 +56,17 @@ public class InstanciaService {
 	public Instancia update(Instancia instancia) {
 		
 		if(instancia.getId() == null) {
-			throw new RegistroNoExisteException("El registro introducido no existe");
+			throw new RegistroNoExisteException(REGISTRO_NO_EXISTE);
+		}
+		
+		if(instancia.getId() <= 0) {
+			throw new IdNoValidoException(ID_NO_VALIDO);
 		}
 		
 		Optional<Instancia> optional = instanciaRepository.findById(instancia.getId());
 		if(optional.isEmpty()) {
-			throw new RegistroNoExisteException("El registro introducido no existe");
+			throw new RegistroNoExisteException(REGISTRO_NO_EXISTE);
 		}
-		
-		if(instancia.getId() <= 0) {
-			throw new IdNoValidoException("El id introducido no es válido");
-		}
-		
 		
 		return instanciaRepository.save(instancia);
 		
@@ -72,14 +75,14 @@ public class InstanciaService {
 	public void deleteById(Long id) {
 		
 		if(id <= 0) {
-			throw new IdNoValidoException("El id introducido no es válido");
+			throw new IdNoValidoException(ID_NO_VALIDO);
 		}
 		
 		Optional<Instancia> optional = instanciaRepository.findById(id);
 		if(optional.isPresent()) {
 			instanciaRepository.deleteById(id);
 		}else {
-			throw new RegistroNoExisteException("El registro con el id introducido no existe");
+			throw new RegistroNoExisteException(REGISTRO_NO_EXISTE);
 		}
 		
 	}

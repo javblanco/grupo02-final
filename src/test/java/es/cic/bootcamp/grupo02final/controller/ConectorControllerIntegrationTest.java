@@ -155,6 +155,25 @@ class ConectorControllerIntegrationTest {
 		.andExpect(status().isBadRequest());
 
 	}
+	
+	@Test
+	void testIdNoValidoException_create() throws Exception {
+
+		Conector conector = generarConector();
+		conector.setId(-1L);
+
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/conexiones/detalle")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(conector));
+
+		this.mvc
+		.perform(mockRequest)
+		.andDo(
+				print())
+		.andExpect(status().isBadRequest());
+
+	}
 
 	@Test
 	void testFindById() throws Exception {

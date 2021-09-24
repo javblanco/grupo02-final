@@ -35,7 +35,7 @@ class ConectorControllerTest {
 		
 		Long id = cut.create(conector);
 		
-		assertEquals(id, 1L);
+		assertEquals(1L, id);
 		verify(dependencia, times(1)).create(conector);
 		
 	}
