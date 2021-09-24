@@ -18,7 +18,7 @@ export class ConexionAddComponent implements OnInit {
     private _conexionService: ConexionService,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _location: Location
+    private _location: Location,
   ) { }
 
   public ngOnInit(): void {
@@ -46,11 +46,15 @@ export class ConexionAddComponent implements OnInit {
 
   public save(): void {
     if (this._isInsert) {
-      this._conexionService.insertConexion(this.conexion).subscribe(
-        () => {
-          this.goBack();
-        }
-      );
+      if(confirm("¿Está seguro de crear la conexión ?")) {
+        this._conexionService.insertConexion(this.conexion).subscribe(
+          () => {
+            
+            this.goBack();
+          }
+        );
+      }
+      
     } else {
       this._conexionService.updateConexion(this.conexion).subscribe(
         () => {
